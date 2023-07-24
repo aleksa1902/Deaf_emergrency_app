@@ -36,6 +36,13 @@
         <activity android:name=".ambulance.form.PoisoningActivity"/>
         <activity android:name=".ambulance.form.MentalCrisesActivity"/>
         <activity android:name=".ambulance.form.ChildbirthActivity"/>
+        <activity android:name=".firefighters.FirefightersActivity"/>
+        <activity android:name=".firefighters.form.FireActivity"/>
+        <activity android:name=".firefighters.form.RescureDangerActivity"/>
+        <activity android:name=".firefighters.form.InterventionsActivity"/>
+        <activity android:name=".firefighters.form.FloodsActivity"/>
+        <activity android:name=".firefighters.form.GasActivity"/>
+        <activity android:name=".firefighters.form.DangerousSubstancesActivity"/>
     </application>
 
 </manifest>
