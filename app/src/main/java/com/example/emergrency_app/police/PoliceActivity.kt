@@ -5,6 +5,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emergrency_app.R
+import com.example.emergrency_app.police.form.CarAccidentActivity
 import com.example.emergrency_app.police.form.HitniSlucajeviActivity
 import com.example.emergrency_app.police.form.TheftActivity
 
@@ -14,7 +15,8 @@ class PoliceActivity  : AppCompatActivity() {
         setContentView(R.layout.activity_police)
         val sudarButton: ImageView = findViewById(R.id.sudarButton)
         sudarButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju sudara
+            val intent = Intent(this@PoliceActivity, CarAccidentActivity::class.java)
+            startActivity(intent)
         }
 
         val kradjaProvalaButton: ImageButton = findViewById(R.id.kradjaProvalaButton)
