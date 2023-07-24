@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Pitanja -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Koju stvar osoba sumnja da je konzumirala ili došla u kontakt s njom?" />
+
+    <EditText
+        android:id="@+id/poisoningThingEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kada je došlo do izloženosti stvari?" />
+
+    <EditText
+        android:id="@+id/poisoningWhenEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kako se osoba oseća nakon izloženosti?" />
+
+    <EditText
+        android:id="@+id/feelingEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Je li osoba svjesna ili ima bilo kakve simptome trovanja?" />
+
+    <EditText
+        android:id="@+id/situationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jeste li primetili bilo kakve vidljive znakove trovanja?" />
+
+    <EditText
+        android:id="@+id/additionalInfoEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/sendInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Posalji informacije"
+        android:onClick="sendInfoOnClick" />
+
+</LinearLayout>
