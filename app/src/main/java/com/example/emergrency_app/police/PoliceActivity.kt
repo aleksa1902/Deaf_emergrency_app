@@ -5,8 +5,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.police.form.HitniSlucajeviActivity
-import com.example.emergrency_app.police.form.TheftActivity
+import com.example.emergrency_app.police.form.*
 
 class PoliceActivity  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +13,8 @@ class PoliceActivity  : AppCompatActivity() {
         setContentView(R.layout.activity_police)
         val sudarButton: ImageView = findViewById(R.id.sudarButton)
         sudarButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju sudara
+            val intent = Intent(this@PoliceActivity, CarAccidentActivity::class.java)
+            startActivity(intent)
         }
 
         val kradjaProvalaButton: ImageButton = findViewById(R.id.kradjaProvalaButton)
@@ -25,17 +25,20 @@ class PoliceActivity  : AppCompatActivity() {
 
         val nasiljeButton: ImageButton = findViewById(R.id.nasiljeButton)
         nasiljeButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju nasilja
+            val intent = Intent(this@PoliceActivity, ViolenceActivity::class.java)
+            startActivity(intent)
         }
 
         val sumnjivaAktivnostButton: ImageButton = findViewById(R.id.sumnjivaAktivnostButton)
         sumnjivaAktivnostButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju sumnjive ili nezakonite aktivnosti
+            val intent = Intent(this@PoliceActivity, IllegalActivity::class.java)
+            startActivity(intent)
         }
 
         val prijetnjeButton: ImageButton = findViewById(R.id.prijetnjeButton)
         prijetnjeButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju prijetnji ili terorističkih aktivnosti
+            val intent = Intent(this@PoliceActivity, TerroristActivity::class.java)
+            startActivity(intent)
         }
 
         val hitniSlucajButton: ImageButton = findViewById(R.id.hitniSlucajButton)
