@@ -32,6 +32,8 @@
         <activity android:name=".ambulance.AmbulanceActivity"/>
         <activity android:name=".ambulance.form.MedicalEmergencyActivity"/>
         <activity android:name=".ambulance.form.InjuriesActivity"/>
+        <activity android:name=".ambulance.form.SuddenDeteriorationActivity"/>
+        <activity android:name=".ambulance.form.PoisoningActivity"/>
     </application>
 
 </manifest>

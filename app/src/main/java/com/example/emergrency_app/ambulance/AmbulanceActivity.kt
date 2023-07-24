@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.emergrency_app.R
 import com.example.emergrency_app.ambulance.form.InjuriesActivity
 import com.example.emergrency_app.ambulance.form.MedicalEmergencyActivity
+import com.example.emergrency_app.ambulance.form.PoisoningActivity
+import com.example.emergrency_app.ambulance.form.SuddenDeteriorationActivity
 
 class AmbulanceActivity  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +28,14 @@ class AmbulanceActivity  : AppCompatActivity() {
 
         val pogorsanoStanje: ImageButton = findViewById(R.id.pogorsanoStanje)
         pogorsanoStanje.setOnClickListener {
-
+            val intent = Intent(this@AmbulanceActivity, SuddenDeteriorationActivity::class.java)
+            startActivity(intent)
         }
 
         val trovanje: ImageButton = findViewById(R.id.trovanje)
         trovanje.setOnClickListener {
-
+            val intent = Intent(this@AmbulanceActivity, PoisoningActivity::class.java)
+            startActivity(intent)
         }
 
         val mentalnaKriza: ImageButton = findViewById(R.id.mentalnaKriza)
