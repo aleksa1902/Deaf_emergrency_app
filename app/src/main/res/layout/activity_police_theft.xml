@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Pitanja -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kada se dogodila krađa/provala?" />
+
+    <EditText
+        android:id="@+id/timeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gde se tačno dogodila krađa/provala?" />
+
+    <EditText
+        android:id="@+id/locationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kakva je bila priroda ukradene/uništene imovine?" />
+
+    <EditText
+        android:id="@+id/injuryEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jeste li primijetili bilo kakve sumnjive aktivnosti prije krađe/provale?" />
+
+    <EditText
+        android:id="@+id/susSituationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Da li imate li opis ili identifikaciju počinitelja?" />
+
+    <EditText
+        android:id="@+id/suspectEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/sendInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Posalji informacije"
+        android:onClick="sendInfoOnClick" />
+
+</LinearLayout>

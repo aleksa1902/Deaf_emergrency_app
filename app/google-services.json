@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "623033171472",
+    "project_id": "deaf-emigrency-app",
+    "storage_bucket": "deaf-emigrency-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623033171472:android:d2af2ab20b526ba6fcd495",
+        "android_client_info": {
+          "package_name": "com.example.emergrency_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhQutPmM2Hfphcntl3fpeOh0L17j-D3_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

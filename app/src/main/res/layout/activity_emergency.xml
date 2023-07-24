@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".EmergencyActivity">
+
+    <ImageButton
+    android:id="@+id/policeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:src="@drawable/police_image"
+    android:background="?android:attr/selectableItemBackground"
+    android:contentDescription="Policija"
+    android:scaleType="fitCenter"
+    android:layout_margin="8dp"
+        />
+
+    <ImageButton
+    android:id="@+id/ambulanceButton"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:src="@drawable/ambulance_image"
+    android:background="?android:attr/selectableItemBackground"
+    android:contentDescription="Hitna Pomoć"
+    android:scaleType="fitCenter"
+    android:layout_margin="8dp"
+        />
+
+    <ImageButton
+    android:id="@+id/firefightersButton"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:src="@drawable/firefighters_image"
+    android:background="?android:attr/selectableItemBackground"
+    android:contentDescription="Vatrogasci"
+    android:scaleType="fitCenter"
+    android:layout_margin="8dp"
+        />
+
+    </LinearLayout>

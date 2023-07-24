@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="2"
+    android:rowCount="3"
+    android:padding="40dp">
+
+    <FrameLayout
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/sudarButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sudar"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Sudar"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/kradjaProvalaButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_kradja_provala"
+        android:background="@drawable/circular_button"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="20dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/nasiljeButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_nasilje"
+        android:background="@drawable/circular_button"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="60dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/sumnjivaAktivnostButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_sumnjiva_aktivnost"
+        android:background="@drawable/circular_button"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/prijetnjeButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_prijetnje"
+        android:background="@drawable/circular_button"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="60dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/hitniSlucajButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_hitni_slucaj"
+        android:background="@drawable/circular_button"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+</GridLayout>
