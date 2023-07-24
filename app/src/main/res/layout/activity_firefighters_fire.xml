@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Pitanja -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gdje se nalazi požar?" />
+
+    <EditText
+        android:id="@+id/fireLocationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kakva je priroda požara (kuća, zgrada, vozilo, šuma itd.)?" />
+
+    <EditText
+        android:id="@+id/fireWhatEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Je li netko zadržan unutar požarnog područja?" />
+
+    <EditText
+        android:id="@+id/stuckEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Postoji li opasnost od širenja požara na druge objekte?" />
+
+    <EditText
+        android:id="@+id/dangerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Imate li informacije o prisutnosti opasnih materijala?" />
+
+    <EditText
+        android:id="@+id/additionalInfoEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/sendInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Posalji informacije"
+        android:onClick="sendInfoOnClick" />
+
+</LinearLayout>
