@@ -25,7 +25,8 @@ class PoliceActivity  : AppCompatActivity() {
 
         val nasiljeButton: ImageButton = findViewById(R.id.nasiljeButton)
         nasiljeButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju nasilja
+            val intent = Intent(this@PoliceActivity, ViolenceActivity::class.java)
+            startActivity(intent)
         }
 
         val sumnjivaAktivnostButton: ImageButton = findViewById(R.id.sumnjivaAktivnostButton)
