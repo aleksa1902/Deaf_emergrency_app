@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.emergrency_app.R
 import com.example.emergrency_app.police.form.CarAccidentActivity
 import com.example.emergrency_app.police.form.HitniSlucajeviActivity
+import com.example.emergrency_app.police.form.IllegalActivity
 import com.example.emergrency_app.police.form.TheftActivity
 
 class PoliceActivity  : AppCompatActivity() {
@@ -32,7 +33,8 @@ class PoliceActivity  : AppCompatActivity() {
 
         val sumnjivaAktivnostButton: ImageButton = findViewById(R.id.sumnjivaAktivnostButton)
         sumnjivaAktivnostButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju sumnjive ili nezakonite aktivnosti
+            val intent = Intent(this@PoliceActivity, IllegalActivity::class.java)
+            startActivity(intent)
         }
 
         val prijetnjeButton: ImageButton = findViewById(R.id.prijetnjeButton)

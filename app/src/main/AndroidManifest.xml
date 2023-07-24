@@ -26,6 +26,7 @@
         <activity android:name=".police.form.HitniSlucajeviActivity"/>
         <activity android:name=".police.form.TheftActivity"/>
         <activity android:name=".police.form.CarAccidentActivity"/>
+        <activity android:name=".police.form.IllegalActivity"/>
     </application>
 
 </manifest>
