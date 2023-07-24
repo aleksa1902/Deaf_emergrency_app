@@ -5,10 +5,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.police.form.CarAccidentActivity
-import com.example.emergrency_app.police.form.HitniSlucajeviActivity
-import com.example.emergrency_app.police.form.IllegalActivity
-import com.example.emergrency_app.police.form.TheftActivity
+import com.example.emergrency_app.police.form.*
 
 class PoliceActivity  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +36,8 @@ class PoliceActivity  : AppCompatActivity() {
 
         val prijetnjeButton: ImageButton = findViewById(R.id.prijetnjeButton)
         prijetnjeButton.setOnClickListener {
-            // TODO: Logika za poziv policije u slučaju prijetnji ili terorističkih aktivnosti
+            val intent = Intent(this@PoliceActivity, TerroristActivity::class.java)
+            startActivity(intent)
         }
 
         val hitniSlucajButton: ImageButton = findViewById(R.id.hitniSlucajButton)
