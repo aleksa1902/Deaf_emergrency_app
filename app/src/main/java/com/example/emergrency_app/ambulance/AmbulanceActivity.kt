@@ -5,10 +5,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.ambulance.form.InjuriesActivity
-import com.example.emergrency_app.ambulance.form.MedicalEmergencyActivity
-import com.example.emergrency_app.ambulance.form.PoisoningActivity
-import com.example.emergrency_app.ambulance.form.SuddenDeteriorationActivity
+import com.example.emergrency_app.ambulance.form.*
 
 class AmbulanceActivity  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,12 +37,14 @@ class AmbulanceActivity  : AppCompatActivity() {
 
         val mentalnaKriza: ImageButton = findViewById(R.id.mentalnaKriza)
         mentalnaKriza.setOnClickListener {
-
+            val intent = Intent(this@AmbulanceActivity, MentalCrisesActivity::class.java)
+            startActivity(intent)
         }
 
         val porodTrudovi: ImageButton = findViewById(R.id.porodTrudovi)
         porodTrudovi.setOnClickListener {
-
+            val intent = Intent(this@AmbulanceActivity, ChildbirthActivity::class.java)
+            startActivity(intent)
         }
     }
 }
