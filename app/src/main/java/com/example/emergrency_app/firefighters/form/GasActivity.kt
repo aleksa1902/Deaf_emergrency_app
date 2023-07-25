@@ -1,11 +1,17 @@
 package com.example.emergrency_app.firefighters.form
 
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
+import android.widget.Toast
+import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
+import com.example.emergrency_app.firefighters.data.GasData
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 
 class GasActivity : AppCompatActivity() {
 
@@ -15,6 +21,8 @@ class GasActivity : AppCompatActivity() {
     private lateinit var dangerEditText: EditText
     private lateinit var additionalInfoEditText: EditText
     private lateinit var sendInfoButton: Button
+
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +35,8 @@ class GasActivity : AppCompatActivity() {
         additionalInfoEditText = findViewById(R.id.additionalInfoEditText)
         sendInfoButton = findViewById(R.id.sendInfoButton)
 
+        db = FirebaseFirestore.getInstance()
+
         sendInfoButton.setOnClickListener {
             val odor = odorEditText.text.toString()
             val gasLocation = gasLocationEditText.text.toString()
@@ -34,10 +44,29 @@ class GasActivity : AppCompatActivity() {
             val danger = dangerEditText.text.toString()
             val additionalInfo = additionalInfoEditText.text.toString()
 
-            // TODO: Obraditi unesene informacije, spremiti u bazu podataka na firebase
+            val liveLocation = Location("mock_provider")
+            liveLocation.latitude = 37.7749
+            liveLocation.longitude = -122.4194
 
-            val logMessage = "Miris: $odor\nLokacija plina: $gasLocation\nNeko zaglavljen: $stuck\nSirenje opasnost: $danger\nInfo opasni materijali: $additionalInfo"
-            Log.d("Informacije", logMessage)
+            val gasData = GasData(
+                odor,
+                gasLocation,
+                stuck,
+                danger,
+                additionalInfo,
+                GeoPoint(liveLocation.latitude, liveLocation.longitude)
+            )
+            db.collection("gas")
+                .add(gasData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Podaci su uspešno sačuvani u bazi.", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { error ->
+                    Toast.makeText(this, "Došlo je do greške prilikom upisivanja podataka: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }

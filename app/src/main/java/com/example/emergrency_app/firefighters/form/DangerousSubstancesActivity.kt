@@ -1,11 +1,17 @@
 package com.example.emergrency_app.firefighters.form
 
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
+import com.example.emergrency_app.firefighters.data.RemovingData
+import com.example.emergrency_app.firefighters.data.SpillingData
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 
 class DangerousSubstancesActivity : AppCompatActivity() {
 
@@ -26,6 +32,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
     private lateinit var safeEditText: EditText
     private lateinit var numPersonEditText: EditText
 
+    private lateinit var db: FirebaseFirestore
+
     private var spilingThing: Boolean = false
     private var check: Boolean = false
 
@@ -38,6 +46,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         layoutSpilling = findViewById(R.id.layoutSpilling)
         layoutRemoving = findViewById(R.id.layoutRemoving)
         buttonSendInformation = findViewById(R.id.buttonSendInformation)
+
+        db = FirebaseFirestore.getInstance()
 
         radioGroupDangerousSubstancesType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -79,8 +89,29 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                 val num = numEditText.text.toString()
                 val additionalInfo = additionalInfoEditText.text.toString()
 
-                val logMessage = "Koja stvar: $thingPerson\nLokacija: $locationThing\nOpasnost: $danger\nBroj osoba: $num\nDodatno: $additionalInfo"
-                Log.d("Informacije", logMessage)
+                val liveLocation = Location("mock_provider")
+                liveLocation.latitude = 37.7749
+                liveLocation.longitude = -122.4194
+
+                val spillingData = SpillingData(
+                    thingPerson,
+                    locationThing,
+                    danger,
+                    num,
+                    additionalInfo,
+                    GeoPoint(liveLocation.latitude, liveLocation.longitude)
+                )
+                db.collection("spilling_hazardous")
+                    .add(spillingData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Podaci su uspešno sačuvani u bazi.", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { error ->
+                        Toast.makeText(this, "Došlo je do greške prilikom upisivanja podataka: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }else{
                 val hazardous = hazardousEditText.text.toString()
                 val hazardousLocation = hazardousLocationEditText.text.toString()
@@ -88,11 +119,30 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                 val safe = safeEditText.text.toString()
                 val numPerson = numPersonEditText.text.toString()
 
-                val logMessage = "Koja vrsta: $hazardous\nLokacija: $hazardousLocation\nSirenje: $dangerSpread\nBezbednost: $safe\nBroj osoba: $numPerson"
-                Log.d("Informacije", logMessage)
-            }
+                val liveLocation = Location("mock_provider")
+                liveLocation.latitude = 37.7749
+                liveLocation.longitude = -122.4194
 
-            // TODO: Obraditi unesene informacije, spremiti u bazu podataka na firebase
+                val removingData = RemovingData(
+                    hazardous,
+                    hazardousLocation,
+                    dangerSpread,
+                    safe,
+                    numPerson,
+                    GeoPoint(liveLocation.latitude, liveLocation.longitude)
+                )
+                db.collection("removing_hazardous")
+                    .add(removingData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Podaci su uspešno sačuvani u bazi.", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { error ->
+                        Toast.makeText(this, "Došlo je do greške prilikom upisivanja podataka: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }

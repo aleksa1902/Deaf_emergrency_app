@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "623033171472",
+	"firebase_url": "https://deaf-emigrency-app-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "deaf-emigrency-app",
     "storage_bucket": "deaf-emigrency-app.appspot.com"
   },

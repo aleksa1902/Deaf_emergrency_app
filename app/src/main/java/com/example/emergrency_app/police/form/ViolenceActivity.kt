@@ -1,11 +1,17 @@
 package com.example.emergrency_app.police.form
 
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
+import com.example.emergrency_app.police.data.FamilyViolenceData
+import com.example.emergrency_app.police.data.PublicViolenceData
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 
 class ViolenceActivity : AppCompatActivity() {
 
@@ -27,6 +33,8 @@ class ViolenceActivity : AppCompatActivity() {
     private lateinit var publicInfoEditText: EditText
     private lateinit var publicAdditionalInfoEditText: EditText
 
+    private lateinit var db: FirebaseFirestore
+
     private var familyViolence: Boolean = false
     private var check: Boolean = false
 
@@ -39,6 +47,8 @@ class ViolenceActivity : AppCompatActivity() {
         layoutFamilyViolence = findViewById(R.id.layoutFamilyViolence)
         layoutPublicViolence = findViewById(R.id.layoutPublicViolence)
         buttonSendInformation = findViewById(R.id.buttonSendInformation)
+
+        db = FirebaseFirestore.getInstance()
 
         radioGroupViolenceType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -72,7 +82,6 @@ class ViolenceActivity : AppCompatActivity() {
             }
         }
 
-        // Ovdje dodajte kod za obradu informacija kad korisnik pritisne "Posalji informacije"
         buttonSendInformation.setOnClickListener {
             if(check && familyViolence){
                 val familyViolencePerson = familyViolencePersonEditText.text.toString()
@@ -82,8 +91,30 @@ class ViolenceActivity : AppCompatActivity() {
                 val suspect = suspectEditText.text.toString()
                 val familyLocation = familyLocationEditText.text.toString()
 
-                val logMessage = "Ko: $familyViolencePerson\nLokacija: $familyLocation\nPovrede: $familyInjury\nSvedok: $youEdit\nOpis: $suspect\nsusSituation: $susSituation\n"
-                Log.d("Informacije", logMessage)
+                val liveLocation = Location("mock_provider")
+                liveLocation.latitude = 37.7749
+                liveLocation.longitude = -122.4194
+
+                val familyViolenceData = FamilyViolenceData(
+                    familyViolencePerson,
+                    familyInjury,
+                    youEdit,
+                    susSituation,
+                    suspect,
+                    familyLocation,
+                    GeoPoint(liveLocation.latitude, liveLocation.longitude)
+                )
+                db.collection("family_violence")
+                    .add(familyViolenceData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Podaci su uspešno sačuvani u bazi.", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { error ->
+                        Toast.makeText(this, "Došlo je do greške prilikom upisivanja podataka: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }else{
                 val publicLocation = publicLocationEditText.text.toString()
                 val publicNumber = publicNumberEditText.text.toString()
@@ -91,11 +122,30 @@ class ViolenceActivity : AppCompatActivity() {
                 val publicInfo = publicInfoEditText.text.toString()
                 val publicAdditionalInfo = publicAdditionalInfoEditText.text.toString()
 
-                val logMessage = "Public location: $publicLocation\nKoliko ucesnika: $publicNumber\nSvedok: $publicYou\nSumnjive aktivnosti: $publicInfo\nJos info: $publicAdditionalInfo"
-                Log.d("Informacije", logMessage)
-            }
+                val liveLocation = Location("mock_provider")
+                liveLocation.latitude = 37.7749
+                liveLocation.longitude = -122.4194
 
-            // TODO: Obraditi unesene informacije, spremiti u bazu podataka na firebase
+                val publicViolenceData = PublicViolenceData(
+                    publicLocation,
+                    publicNumber,
+                    publicYou,
+                    publicInfo,
+                    publicAdditionalInfo,
+                    GeoPoint(liveLocation.latitude, liveLocation.longitude)
+                )
+                db.collection("public_violence")
+                    .add(publicViolenceData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Podaci su uspešno sačuvani u bazi.", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { error ->
+                        Toast.makeText(this, "Došlo je do greške prilikom upisivanja podataka: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }
