@@ -43,6 +43,7 @@
         <activity android:name=".firefighters.form.FloodsActivity"/>
         <activity android:name=".firefighters.form.GasActivity"/>
         <activity android:name=".firefighters.form.DangerousSubstancesActivity"/>
+        <activity android:name=".RegistrationActivity"/>
     </application>
 
 </manifest>

@@ -6,14 +6,35 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".LoginActivity">
+    tools:context=".RegistrationActivity">
 
     <EditText
-        android:id="@+id/usernameEditText"
+        android:id="@+id/firstNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Korisničko ime"
+        android:hint="Ime"
         android:inputType="text" />
+
+    <EditText
+        android:id="@+id/lastNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Prezime"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/dobEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Datum rođenja"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -22,11 +43,12 @@
         android:hint="Lozinka"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/jmbgEditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prijavi se" />
+        android:hint="JMBG"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/registerButton"

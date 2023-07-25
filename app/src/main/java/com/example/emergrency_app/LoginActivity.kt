@@ -1,6 +1,7 @@
 package com.example.emergrency_app
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -12,6 +13,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
+    private lateinit var registerButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
         usernameEditText = findViewById(R.id.usernameEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         loginButton = findViewById(R.id.loginButton)
+        registerButton = findViewById(R.id.registerButton)
 
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString().trim()
@@ -39,6 +42,11 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        registerButton.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegistrationActivity::class.java)
+            startActivity(intent)
         }
     }
 }

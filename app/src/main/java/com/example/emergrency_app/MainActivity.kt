@@ -8,6 +8,9 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import android.view.Menu
+import android.view.MenuItem
+
 
 class MainActivity : AppCompatActivity() {
     private val REQUEST_LOGIN = 1
@@ -28,6 +31,24 @@ class MainActivity : AppCompatActivity() {
         if (currentUser == null) {
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivityForResult(intent, REQUEST_LOGIN)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_logout -> {
+                // Poziv za odjavu korisnika
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                startActivityForResult(intent, REQUEST_LOGIN)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -5,4 +5,10 @@
     <item name="usernameEditText" type="id" />
     <item name="sendInfoButton" type="id" />
     <item name="locationEditText" type="id" />
+    <item name="firstNameEditText" type="id" />
+    <item name="lastNameEditText" type="id" />
+    <item name="dobEditText" type="id" />
+    <item name="emailEditText" type="id" />
+    <item name="jmbgEditText" type="id" />
+    <item name="registerButton" type="id" />
 </resources>
