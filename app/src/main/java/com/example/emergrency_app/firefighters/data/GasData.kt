@@ -8,5 +8,5 @@ data class GasData(
     val ljudiOkolina: String = "",
     val situacijaPodrucje: String = "",
     val dodatneInformacije: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

@@ -8,5 +8,5 @@ data class FloodsData(
     val decaStariInvalidi: String = "",
     val informacijaPoplave: String = "",
     val situacijaPodrucje: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

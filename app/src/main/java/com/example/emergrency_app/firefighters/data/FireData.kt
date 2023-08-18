@@ -8,5 +8,5 @@ data class FireData(
     val zaglavljeneOsobe: String = "",
     val opasnost: String = "",
     val opasneMaterije: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )
