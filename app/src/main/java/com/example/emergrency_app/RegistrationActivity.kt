@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import android.app.DatePickerDialog
+import android.view.View.OnFocusChangeListener
+import java.util.Calendar
 
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var firstNameEditText: EditText
@@ -40,6 +43,25 @@ class RegistrationActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.registerButton)
         selectImageButton = findViewById(R.id.selectImageButton)
         profileImageView = findViewById(R.id.profileImageView)
+
+        dobEditText.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    this,
+                    { _, selectedYear, selectedMonth, selectedDay ->
+                        val formattedDate = String.format("%02d-%02d-%d", selectedDay, selectedMonth + 1, selectedYear)
+                        dobEditText.setText(formattedDate)
+                    },
+                    year, month, day
+                )
+                datePickerDialog.show()
+            }
+        }
 
         selectImageButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
