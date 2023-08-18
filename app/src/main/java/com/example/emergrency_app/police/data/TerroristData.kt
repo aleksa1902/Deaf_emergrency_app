@@ -8,5 +8,5 @@ data class TerroristData(
     val tacnaLokacija: String = "",
     val sumnjivaSituacija: String = "",
     val svedoci: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

@@ -9,5 +9,5 @@ data class FamilyViolenceData(
     val prethodniSlucajevi: String = "",
     val dodatnaInformacija: String = "",
     val lokacija: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

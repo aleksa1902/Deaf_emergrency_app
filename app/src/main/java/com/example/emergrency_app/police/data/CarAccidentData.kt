@@ -8,5 +8,5 @@ data class CarAccidentData(
     val povrede: String = "",
     val informacijeVozaci: String = "",
     val sumnjiveAktivnosti: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

@@ -1,19 +1,31 @@
 package com.example.emergrency_app.police.form
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
+import com.example.emergrency_app.helper.FirebaseHelper
+import com.example.emergrency_app.helper.SmsHelper
 import com.example.emergrency_app.police.data.FamilyViolenceData
 import com.example.emergrency_app.police.data.PublicViolenceData
+import com.example.emergrency_app.police.data.TheftData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
 class ViolenceActivity : AppCompatActivity() {
+
+    private val LOCATION_PERMISSION_REQUEST_CODE = 123
 
     private lateinit var radioGroupViolenceType: RadioGroup
     private lateinit var layoutFamilyViolence: LinearLayout
@@ -84,67 +96,172 @@ class ViolenceActivity : AppCompatActivity() {
 
         buttonSendInformation.setOnClickListener {
             if(check && familyViolence){
-                val familyViolencePerson = familyViolencePersonEditText.text.toString()
-                val familyInjury = familyInjuryEditText.text.toString()
-                val youEdit = youEditText.text.toString()
-                val susSituation = susSituationEditText.text.toString()
-                val suspect = suspectEditText.text.toString()
-                val familyLocation = familyLocationEditText.text.toString()
-
-                val liveLocation = Location("mock_provider")
-                liveLocation.latitude = 37.7749
-                liveLocation.longitude = -122.4194
-
-                val familyViolenceData = FamilyViolenceData(
-                    familyViolencePerson,
-                    familyInjury,
-                    youEdit,
-                    susSituation,
-                    suspect,
-                    familyLocation,
-                    GeoPoint(liveLocation.latitude, liveLocation.longitude)
+                val data = FamilyViolenceData(
+                    familyViolencePersonEditText.text.toString(),
+                    familyInjuryEditText.text.toString(),
+                    youEditText.text.toString(),
+                    susSituationEditText.text.toString(),
+                    suspectEditText.text.toString(),
+                    familyLocationEditText.text.toString(),
+                    null
                 )
-                db.collection("family_violence")
-                    .add(familyViolenceData)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Podaci su uspešno sačuvani u bazi.", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { error ->
-                        Toast.makeText(this, "Došlo je do greške prilikom upisivanja podataka: ${error.message}", Toast.LENGTH_SHORT).show()
-                    }
 
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (FirebaseHelper.isInternetConnected(this)) {
+                        getCurrentLocationAndSendDataFamily(data, true)
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // No internet, send live location as SMS
+                        getCurrentLocationAndSendDataFamily(data, false)
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        LOCATION_PERMISSION_REQUEST_CODE
+                    )
+                }
             }else{
-                val publicLocation = publicLocationEditText.text.toString()
-                val publicNumber = publicNumberEditText.text.toString()
-                val publicYou = publicYouEditText.text.toString()
-                val publicInfo = publicInfoEditText.text.toString()
-                val publicAdditionalInfo = publicAdditionalInfoEditText.text.toString()
-
-                val liveLocation = Location("mock_provider")
-                liveLocation.latitude = 37.7749
-                liveLocation.longitude = -122.4194
-
-                val publicViolenceData = PublicViolenceData(
-                    publicLocation,
-                    publicNumber,
-                    publicYou,
-                    publicInfo,
-                    publicAdditionalInfo,
-                    GeoPoint(liveLocation.latitude, liveLocation.longitude)
+                val data = PublicViolenceData(
+                    publicLocationEditText.text.toString(),
+                    publicNumberEditText.text.toString(),
+                    publicYouEditText.text.toString(),
+                    publicInfoEditText.text.toString(),
+                    publicAdditionalInfoEditText.text.toString(),
+                    null
                 )
-                db.collection("public_violence")
-                    .add(publicViolenceData)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Podaci su uspešno sačuvani u bazi.", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { error ->
-                        Toast.makeText(this, "Došlo je do greške prilikom upisivanja podataka: ${error.message}", Toast.LENGTH_SHORT).show()
-                    }
 
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    if (FirebaseHelper.isInternetConnected(this)) {
+                        getCurrentLocationAndSendDataPublic(data, true)
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // No internet, send live location as SMS
+                        getCurrentLocationAndSendDataPublic(data, false)
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        LOCATION_PERMISSION_REQUEST_CODE
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getCurrentLocationAndSendDataFamily(data: FamilyViolenceData, net: Boolean) {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        try {
+            locationManager.requestSingleUpdate(
+                LocationManager.GPS_PROVIDER,
+                object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        if(net){
+                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "family_violence", this@ViolenceActivity)
+                        }else{
+                            SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@ViolenceActivity)
+                        }
+
+                        locationManager.removeUpdates(this)
+                    }
+                },
+                null
+            )
+        } catch (ex: SecurityException) {
+            Toast.makeText(this, "Dozvolite pristup vašoj lokaciji.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getCurrentLocationAndSendDataPublic(data: PublicViolenceData, net: Boolean) {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        try {
+            locationManager.requestSingleUpdate(
+                LocationManager.GPS_PROVIDER,
+                object : LocationListener {
+                    override fun onLocationChanged(location: Location) {
+                        if(net){
+                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "public_violence", this@ViolenceActivity)
+                        }else{
+                            SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@ViolenceActivity)
+                        }
+
+                        locationManager.removeUpdates(this)
+                    }
+                },
+                null
+            )
+        } catch (ex: SecurityException) {
+            Toast.makeText(this, "Dozvolite pristup vašoj lokaciji.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if(familyViolence){
+                    val data = FamilyViolenceData(
+                        familyViolencePersonEditText.text.toString(),
+                        familyInjuryEditText.text.toString(),
+                        youEditText.text.toString(),
+                        susSituationEditText.text.toString(),
+                        suspectEditText.text.toString(),
+                        familyLocationEditText.text.toString(),
+                        null
+                    )
+
+                    if(FirebaseHelper.isInternetConnected(this)){
+                        getCurrentLocationAndSendDataFamily(data, true)
+                    }else{
+                        getCurrentLocationAndSendDataFamily(data, false)
+                    }
+                }else{
+                    val data = PublicViolenceData(
+                        publicLocationEditText.text.toString(),
+                        publicNumberEditText.text.toString(),
+                        publicYouEditText.text.toString(),
+                        publicInfoEditText.text.toString(),
+                        publicAdditionalInfoEditText.text.toString(),
+                        null
+                    )
+
+                    if(FirebaseHelper.isInternetConnected(this)){
+                        getCurrentLocationAndSendDataPublic(data, true)
+                    }else{
+                        getCurrentLocationAndSendDataPublic(data, false)
+                    }
+                }
+            } else {
+                Toast.makeText(
+                    this,
+                    "Dozvolite pristup vašoj lokaciji.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

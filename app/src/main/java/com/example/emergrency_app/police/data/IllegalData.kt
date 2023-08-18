@@ -8,5 +8,5 @@ data class IllegalData(
     val tacnaLokacija: String = "",
     val svedok: String = "",
     val trenutnaPretnja: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )
