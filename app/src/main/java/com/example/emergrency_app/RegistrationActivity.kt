@@ -16,6 +16,7 @@ import com.google.firebase.storage.FirebaseStorage
 import android.app.DatePickerDialog
 import android.view.View.OnFocusChangeListener
 import java.util.Calendar
+import java.util.regex.Pattern
 
 class RegistrationActivity : AppCompatActivity() {
     private lateinit var firstNameEditText: EditText
@@ -77,9 +78,9 @@ class RegistrationActivity : AppCompatActivity() {
             val jmbg = jmbgEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            // TODO: Validacija polja pre slanja podataka u Firebase
-
-            registerUser(firstName, lastName, dob, email, jmbg, password)
+            if (validateInput(firstName, lastName, dob, email, jmbg, password)) {
+                registerUser(firstName, lastName, dob, email, jmbg, password)
+            }
         }
     }
 
@@ -91,6 +92,36 @@ class RegistrationActivity : AppCompatActivity() {
                 profileImageView.setImageURI(selectedImageUri)
             }
         }
+    }
+
+    private fun validateInput(firstName: String, lastName: String, dob: String, email: String, jmbg: String, password: String): Boolean {
+        if (firstName.isEmpty() || lastName.isEmpty() || dob.isEmpty() || email.isEmpty() || jmbg.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Sva polja su obavezna.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        val emailPattern = Pattern.compile("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
+        if (!emailPattern.matcher(email).matches()) {
+            Toast.makeText(this, "Unesite validnu email adresu.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        val passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+\$")
+        if (!passwordPattern.matcher(password).matches()) {
+            Toast.makeText(
+                this,
+                "Šifra treba da sadrži barem jedno veliko slovo, jedan broj i barem jedan karakter.",
+                Toast.LENGTH_SHORT
+            ).show()
+            return false
+        }
+
+        if (jmbg.length != 13 || !jmbg.all { it.isDigit() }) {
+            Toast.makeText(this, "JMBG treba da ima tačno 13 cifara.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
     private fun registerUser(firstName: String, lastName: String, dob: String, email: String, jmbg: String, password: String) {
