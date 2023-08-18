@@ -8,5 +8,5 @@ data class PoisoningData(
     val osecajOsobe: String = "",
     val svest: String = "",
     val vidljiviZnakovi: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

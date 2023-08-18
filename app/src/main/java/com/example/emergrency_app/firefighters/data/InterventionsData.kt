@@ -8,5 +8,5 @@ data class InterventionsData(
     val zarobljeniPovrede: String = "",
     val situacijaPodrucje: String = "",
     val medicinskaPomoc: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

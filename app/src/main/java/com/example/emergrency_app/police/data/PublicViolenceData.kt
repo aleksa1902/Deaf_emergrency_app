@@ -8,5 +8,5 @@ data class PublicViolenceData(
     val svedok: String = "",
     val opisNapadaca: String = "",
     val brojPovredjenih: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

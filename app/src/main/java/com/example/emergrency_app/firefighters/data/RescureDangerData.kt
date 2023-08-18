@@ -8,5 +8,5 @@ data class RescureDangerData(
     val tacnaLokacija: String = "",
     val zarobljeniPovrede: String = "",
     val situacijaPodrucje: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

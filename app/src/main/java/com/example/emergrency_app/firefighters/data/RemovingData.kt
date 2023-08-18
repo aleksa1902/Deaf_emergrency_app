@@ -8,5 +8,5 @@ data class RemovingData(
     val opasnostEksplozije: String = "",
     val sigurnostOkoline: String = "",
     val povredjeneOsobe: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

@@ -8,5 +8,5 @@ data class HitniSlucajeviData(
     val povrede: String = "",
     val brojOsoba: String = "",
     val opisPocinitelja: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

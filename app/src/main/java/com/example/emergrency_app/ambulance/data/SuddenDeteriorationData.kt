@@ -8,5 +8,5 @@ data class SuddenDeteriorationData(
     val faktori: String = "",
     val istorijaSimptoma: String = "",
     val promeneStanja: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

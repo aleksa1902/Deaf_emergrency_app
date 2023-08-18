@@ -8,5 +8,5 @@ data class MedicalEmergencyData(
     val disanje: String = "",
     val bol: String = "",
     val istorijaBolesti: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

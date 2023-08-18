@@ -8,5 +8,5 @@ data class TheftData(
     val prirodaImovine: String = "",
     val opisPocinitelja: String = "",
     val sumnjivaAktivnost: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

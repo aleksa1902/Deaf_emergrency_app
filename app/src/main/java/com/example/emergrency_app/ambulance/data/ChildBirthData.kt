@@ -8,5 +8,5 @@ data class ChildBirthData(
     val komplikacija: String = "",
     val vodenjak: String = "",
     val istorijaProblema: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

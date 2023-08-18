@@ -8,5 +8,5 @@ data class SpillingData(
     val opasnostEksplozije: String = "",
     val opsobeOkolina: String = "",
     val dodatneInformacije: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )
