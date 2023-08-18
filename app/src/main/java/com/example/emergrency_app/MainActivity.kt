@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity() {
                 startActivityForResult(intent, REQUEST_LOGIN)
                 true
             }
+            R.id.menu_profile -> {
+                val intent = Intent(this@MainActivity, ProfileActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
