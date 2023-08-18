@@ -8,5 +8,5 @@ data class MentalCrisesData(
     val istorijaDijagnostika: String = "",
     val terapijaLekovi: String = "",
     val sigurnost: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )

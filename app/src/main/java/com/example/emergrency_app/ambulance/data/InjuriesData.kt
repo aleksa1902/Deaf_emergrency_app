@@ -8,5 +8,5 @@ data class InjuriesData(
     val svest: String = "",
     val krvarenje: String = "",
     val pokretljivostOsobe: String = "",
-    val geografskaLokacija: GeoPoint? = null
+    var geografskaLokacija: GeoPoint? = null
 )
