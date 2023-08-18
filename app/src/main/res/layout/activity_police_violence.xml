@@ -1,168 +1,209 @@
 <!-- activity_police_violence.xml -->
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- Opcije za odabir vrste nasilja -->
-    <RadioGroup
-        android:id="@+id/radioGroupViolenceType"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/radioButtonFamilyViolence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nasilje u porodici" />
-
-        <RadioButton
-            android:id="@+id/radioButtonPublicViolence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nasilje u javnom prostoru" />
-
-    </RadioGroup>
-
-    <!-- Forma za "Nasilje u porodici" -->
-    <LinearLayout
-        android:id="@+id/layoutFamilyViolence"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <!-- Pitanja -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ko je bio uključen u nasilje?" />
+            android:text="Nasilje"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp" />
 
-        <EditText
-            android:id="@+id/familyViolencePersonEditText"
+        <!-- Opcije za odabir vrste nasilja -->
+        <RadioGroup
+            android:id="@+id/radioGroupViolenceType"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp">
 
-        <TextView
+            <RadioButton
+                android:id="@+id/radioButtonFamilyViolence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nasilje u porodici" />
+
+            <RadioButton
+                android:id="@+id/radioButtonPublicViolence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nasilje u javnom prostoru" />
+
+        </RadioGroup>
+
+        <!-- Forma za "Nasilje u porodici" -->
+        <LinearLayout
+            android:id="@+id/layoutFamilyViolence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <!-- Pitanja -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ko je bio uključen u nasilje?" />
+
+            <EditText
+                android:id="@+id/familyViolencePersonEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jesu li povrede vidljive?" />
+
+            <EditText
+                android:id="@+id/familyInjuryEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jeste li svedok nasilja ili žrtva?" />
+
+            <EditText
+                android:id="@+id/youEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Da li je bilo prethodnih incidenata nasilja u obitelji?" />
+
+            <EditText
+                android:id="@+id/susSituationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Da li je počinitelj još uvek prisutan na mestu događaja?" />
+
+            <EditText
+                android:id="@+id/suspectEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gde se nalazite?" />
+
+            <EditText
+                android:id="@+id/familyLocationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+        <!-- Forma za "Nasilje u javnom prostoru" -->
+        <LinearLayout
+            android:id="@+id/layoutPublicViolence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <!-- Pitanja -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gde se točno događa nasilje?" />
+
+            <EditText
+                android:id="@+id/publicLocationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Koliko je osoba uključeno u tučnjavu ili nerede?" />
+
+            <EditText
+                android:id="@+id/publicNumberEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jeste li svedok nasilja ili žrtva?" />
+
+            <EditText
+                android:id="@+id/publicYouEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Imate li opis ili identifikaciju napadača?" />
+
+            <EditText
+                android:id="@+id/publicInfoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Da li je neko povređen i da li je potrebna medicinska pomoć?" />
+
+            <EditText
+                android:id="@+id/publicAdditionalInfoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+        <!-- Dugme za slanje informacija -->
+        <Button
+            android:id="@+id/buttonSendInformation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jesu li povrede vidljive?" />
-
-        <EditText
-            android:id="@+id/familyInjuryEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jeste li svedok nasilja ili žrtva?" />
-
-        <EditText
-            android:id="@+id/youEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Da li je bilo prethodnih incidenata nasilja u obitelji?" />
-
-        <EditText
-            android:id="@+id/susSituationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Da li je počinitelj još uvek prisutan na mestu događaja?" />
-
-        <EditText
-            android:id="@+id/suspectEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gde se nalazite?" />
-
-        <EditText
-            android:id="@+id/familyLocationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:text="Posalji informacije"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="#009688"
+            android:textColor="#FFFFFF"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:onClick="sendInfoOnClick"
+            android:backgroundTint="#009688"
+            android:layout_marginBottom="75px"
+            android:visibility="gone"/>
 
     </LinearLayout>
-
-    <!-- Forma za "Nasilje u javnom prostoru" -->
-    <LinearLayout
-        android:id="@+id/layoutPublicViolence"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <!-- Pitanja -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gde se točno događa nasilje?" />
-
-        <EditText
-            android:id="@+id/publicLocationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Koliko je osoba uključeno u tučnjavu ili nerede?" />
-
-        <EditText
-            android:id="@+id/publicNumberEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jeste li svedok nasilja ili žrtva?" />
-
-        <EditText
-            android:id="@+id/publicYouEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Imate li opis ili identifikaciju napadača?" />
-
-        <EditText
-            android:id="@+id/publicInfoEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Da li je neko povređen i da li je potrebna medicinska pomoć?" />
-
-        <EditText
-            android:id="@+id/publicAdditionalInfoEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <!-- Dugme za slanje informacija -->
-    <Button
-        android:id="@+id/buttonSendInformation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pošalji informacije" />
-
-</LinearLayout>
+</ScrollView>

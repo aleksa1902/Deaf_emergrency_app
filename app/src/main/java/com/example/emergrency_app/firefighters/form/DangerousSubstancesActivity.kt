@@ -66,6 +66,7 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                 R.id.radioButtonSpilling -> {
                     layoutSpilling.visibility = View.VISIBLE
                     layoutRemoving.visibility = View.GONE
+                    buttonSendInformation.visibility = View.VISIBLE
 
                     thingPersonEditText = findViewById(R.id.thingPersonEditText)
                     locationThingEditText = findViewById(R.id.locationThingEditText)
@@ -79,6 +80,7 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                 R.id.radioButtonRemoving -> {
                     layoutSpilling.visibility = View.GONE
                     layoutRemoving.visibility = View.VISIBLE
+                    buttonSendInformation.visibility = View.VISIBLE
 
                     hazardousEditText = findViewById(R.id.hazardousEditText)
                     hazardousLocationEditText = findViewById(R.id.hazardousLocationEditText)

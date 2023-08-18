@@ -67,6 +67,7 @@ class ViolenceActivity : AppCompatActivity() {
                 R.id.radioButtonFamilyViolence -> {
                     layoutFamilyViolence.visibility = View.VISIBLE
                     layoutPublicViolence.visibility = View.GONE
+                    buttonSendInformation.visibility = View.VISIBLE
 
                     familyViolencePersonEditText = findViewById(R.id.familyViolencePersonEditText)
                     familyInjuryEditText = findViewById(R.id.familyInjuryEditText)
@@ -81,6 +82,7 @@ class ViolenceActivity : AppCompatActivity() {
                 R.id.radioButtonPublicViolence -> {
                     layoutFamilyViolence.visibility = View.GONE
                     layoutPublicViolence.visibility = View.VISIBLE
+                    buttonSendInformation.visibility = View.VISIBLE
 
                     publicLocationEditText = findViewById(R.id.publicLocationEditText)
                     publicNumberEditText = findViewById(R.id.publicNumberEditText)

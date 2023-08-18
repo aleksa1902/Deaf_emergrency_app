@@ -5,12 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Opasne materije"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="25dp" />
+
     <!-- Opcije za odabir vrste opasnih stvari -->
     <RadioGroup
         android:id="@+id/radioGroupDangerousSubstancesType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp">
 
         <RadioButton
             android:id="@+id/radioButtonSpilling"
@@ -32,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="16dp"
         android:visibility="gone">
 
         <!-- Pitanja -->
@@ -43,7 +54,8 @@
         <EditText
             android:id="@+id/thingPersonEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,7 +65,8 @@
         <EditText
             android:id="@+id/locationThingEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,7 +76,8 @@
         <EditText
             android:id="@+id/dangerEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,7 +87,8 @@
         <EditText
             android:id="@+id/numEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +98,8 @@
         <EditText
             android:id="@+id/additionalInfoEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 
@@ -93,6 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="16dp"
         android:visibility="gone">
 
         <!-- Pitanja -->
@@ -104,7 +121,8 @@
         <EditText
             android:id="@+id/hazardousEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,7 +132,8 @@
         <EditText
             android:id="@+id/hazardousLocationEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -124,7 +143,8 @@
         <EditText
             android:id="@+id/dangerSpreadEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -134,7 +154,8 @@
         <EditText
             android:id="@+id/safeEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -144,7 +165,8 @@
         <EditText
             android:id="@+id/numPersonEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 
@@ -153,6 +175,18 @@
         android:id="@+id/buttonSendInformation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pošalji informacije" />
+        android:text="Posalji informacije"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="#009688"
+        android:textColor="#FFFFFF"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:onClick="sendInfoOnClick"
+        android:backgroundTint="#009688"
+        android:radius="20dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

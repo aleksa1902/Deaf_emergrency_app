@@ -5,6 +5,15 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spasavanje iz opasnosti"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp" />
+
     <!-- Pitanja -->
     <TextView
         android:layout_width="wrap_content"
@@ -14,7 +23,8 @@
     <EditText
         android:id="@+id/dangerNatureEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +34,8 @@
     <EditText
         android:id="@+id/numEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +45,8 @@
     <EditText
         android:id="@+id/currLocationEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +56,8 @@
     <EditText
         android:id="@+id/dangerEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,13 +67,24 @@
     <EditText
         android:id="@+id/additionalInfoEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"/>
 
     <Button
         android:id="@+id/sendInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Posalji informacije"
-        android:onClick="sendInfoOnClick" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="#009688"
+        android:textColor="#FFFFFF"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:onClick="sendInfoOnClick"
+        android:backgroundTint="#009688"
+        android:radius="20dp"/>
 
 </LinearLayout>

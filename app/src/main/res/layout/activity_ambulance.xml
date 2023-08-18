@@ -1,93 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:columnCount="2"
-    android:rowCount="3"
-    android:padding="40dp">
+    android:layout_height="match_parent">
+    
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:rowCount="3"
+        android:padding="40dp">
 
-    <FrameLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp">
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp">
 
-        <ImageView
-            android:id="@+id/hitniSlucajevi"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/hitni_slucajevi"
-            android:scaleType="centerCrop" />
+            <ImageView
+                android:id="@+id/hitniSlucajevi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/hitni_slucajevi"
+                android:scaleType="centerCrop" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Hitne medicinske situacije"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Hitne medicinske situacije"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
-    </FrameLayout>
+        </FrameLayout>
 
-    <ImageButton
-        android:id="@+id/povrede"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/povrede"
-        android:background="@drawable/circular_button"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="20dp"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/povrede"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/povrede"
+            android:background="@drawable/circular_button"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="20dp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/pogorsanoStanje"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/pogorsano_stanje"
-        android:background="@drawable/circular_button"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="60dp"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/pogorsanoStanje"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/pogorsano_stanje"
+            android:background="@drawable/circular_button"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="60dp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/trovanje"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/trovanje"
-        android:background="@drawable/circular_button"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/trovanje"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/trovanje"
+            android:background="@drawable/circular_button"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/mentalnaKriza"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/mentalna_kriza"
-        android:background="@drawable/circular_button"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="60dp"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/mentalnaKriza"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/mentalna_kriza"
+            android:background="@drawable/circular_button"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="60dp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/porodTrudovi"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/porod_trudovi"
-        android:background="@drawable/circular_button"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/porodTrudovi"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/porod_trudovi"
+            android:background="@drawable/circular_button"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
-</GridLayout>
+    </GridLayout>
+</ScrollView>
