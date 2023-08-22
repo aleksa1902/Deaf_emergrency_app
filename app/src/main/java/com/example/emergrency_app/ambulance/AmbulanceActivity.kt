@@ -17,31 +17,31 @@ class AmbulanceActivity  : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val povrede: ImageButton = findViewById(R.id.povrede)
+        val povrede: ImageView = findViewById(R.id.povrede)
         povrede.setOnClickListener {
             val intent = Intent(this@AmbulanceActivity, InjuriesActivity::class.java)
             startActivity(intent)
         }
 
-        val pogorsanoStanje: ImageButton = findViewById(R.id.pogorsanoStanje)
+        val pogorsanoStanje: ImageView = findViewById(R.id.pogorsanoStanje)
         pogorsanoStanje.setOnClickListener {
             val intent = Intent(this@AmbulanceActivity, SuddenDeteriorationActivity::class.java)
             startActivity(intent)
         }
 
-        val trovanje: ImageButton = findViewById(R.id.trovanje)
+        val trovanje: ImageView = findViewById(R.id.trovanje)
         trovanje.setOnClickListener {
             val intent = Intent(this@AmbulanceActivity, PoisoningActivity::class.java)
             startActivity(intent)
         }
 
-        val mentalnaKriza: ImageButton = findViewById(R.id.mentalnaKriza)
+        val mentalnaKriza: ImageView = findViewById(R.id.mentalnaKriza)
         mentalnaKriza.setOnClickListener {
             val intent = Intent(this@AmbulanceActivity, MentalCrisesActivity::class.java)
             startActivity(intent)
         }
 
-        val porodTrudovi: ImageButton = findViewById(R.id.porodTrudovi)
+        val porodTrudovi: ImageView = findViewById(R.id.porodTrudovi)
         porodTrudovi.setOnClickListener {
             val intent = Intent(this@AmbulanceActivity, ChildbirthActivity::class.java)
             startActivity(intent)

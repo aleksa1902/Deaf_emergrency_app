@@ -15,35 +15,35 @@ class FirefightersActivity  : AppCompatActivity() {
         setContentView(R.layout.activity_firefighters)
         val pozarButton: ImageView = findViewById(R.id.pozarButton)
         pozarButton.setOnClickListener {
-            val intent = Intent(this@FirefightersActivity, CarAccidentActivity::class.java)
+            val intent = Intent(this@FirefightersActivity, FireActivity::class.java)
             startActivity(intent)
         }
 
-        val spasavanjeIzOpasnostiButton: ImageButton = findViewById(R.id.spasavanjeIzOpasnostiButton)
+        val spasavanjeIzOpasnostiButton: ImageView = findViewById(R.id.spasavanjeIzOpasnostiButton)
         spasavanjeIzOpasnostiButton.setOnClickListener {
             val intent = Intent(this@FirefightersActivity, RescureDangerActivity::class.java)
             startActivity(intent)
         }
 
-        val tehnickaIntervencijaButton: ImageButton = findViewById(R.id.tehnickaIntervencijaButton)
+        val tehnickaIntervencijaButton: ImageView = findViewById(R.id.tehnickaIntervencijaButton)
         tehnickaIntervencijaButton.setOnClickListener {
             val intent = Intent(this@FirefightersActivity, InterventionsActivity::class.java)
             startActivity(intent)
         }
 
-        val izlivanjeOpasnihStvariButton: ImageButton = findViewById(R.id.izlivanjeOpasnihStvariButton)
+        val izlivanjeOpasnihStvariButton: ImageView = findViewById(R.id.izlivanjeOpasnihStvariButton)
         izlivanjeOpasnihStvariButton.setOnClickListener {
             val intent = Intent(this@FirefightersActivity, DangerousSubstancesActivity::class.java)
             startActivity(intent)
         }
 
-        val poplaveButton: ImageButton = findViewById(R.id.poplaveButton)
+        val poplaveButton: ImageView = findViewById(R.id.poplaveButton)
         poplaveButton.setOnClickListener {
             val intent = Intent(this@FirefightersActivity, FloodsActivity::class.java)
             startActivity(intent)
         }
 
-        val plinButton: ImageButton = findViewById(R.id.plinButton)
+        val plinButton: ImageView = findViewById(R.id.plinButton)
         plinButton.setOnClickListener {
             val intent = Intent(this@FirefightersActivity, GasActivity::class.java)
             startActivity(intent)

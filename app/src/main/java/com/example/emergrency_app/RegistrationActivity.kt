@@ -106,7 +106,7 @@ class RegistrationActivity : AppCompatActivity() {
             return false
         }
 
-        val passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+\$")
+        val passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}\$")
         if (!passwordPattern.matcher(password).matches()) {
             Toast.makeText(
                 this,

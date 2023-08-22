@@ -17,31 +17,31 @@ class PoliceActivity  : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val kradjaProvalaButton: ImageButton = findViewById(R.id.kradjaProvalaButton)
+        val kradjaProvalaButton: ImageView = findViewById(R.id.kradjaProvalaButton)
         kradjaProvalaButton.setOnClickListener {
             val intent = Intent(this@PoliceActivity, TheftActivity::class.java)
             startActivity(intent)
         }
 
-        val nasiljeButton: ImageButton = findViewById(R.id.nasiljeButton)
+        val nasiljeButton: ImageView = findViewById(R.id.nasiljeButton)
         nasiljeButton.setOnClickListener {
             val intent = Intent(this@PoliceActivity, ViolenceActivity::class.java)
             startActivity(intent)
         }
 
-        val sumnjivaAktivnostButton: ImageButton = findViewById(R.id.sumnjivaAktivnostButton)
+        val sumnjivaAktivnostButton: ImageView = findViewById(R.id.sumnjivaAktivnostButton)
         sumnjivaAktivnostButton.setOnClickListener {
             val intent = Intent(this@PoliceActivity, IllegalActivity::class.java)
             startActivity(intent)
         }
 
-        val prijetnjeButton: ImageButton = findViewById(R.id.prijetnjeButton)
+        val prijetnjeButton: ImageView = findViewById(R.id.prijetnjeButton)
         prijetnjeButton.setOnClickListener {
             val intent = Intent(this@PoliceActivity, TerroristActivity::class.java)
             startActivity(intent)
         }
 
-        val hitniSlucajButton: ImageButton = findViewById(R.id.hitniSlucajButton)
+        val hitniSlucajButton: ImageView = findViewById(R.id.hitniSlucajButton)
         hitniSlucajButton.setOnClickListener {
             val intent = Intent(this@PoliceActivity, HitniSlucajeviActivity::class.java)
             startActivity(intent)

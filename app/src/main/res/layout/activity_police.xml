@@ -10,13 +10,13 @@
         android:layout_height="match_parent"
         android:columnCount="2"
         android:rowCount="3"
-        android:padding="40dp">
+        android:padding="35dp">
 
         <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
             <ImageView
                 android:id="@+id/sudarButton"
@@ -29,71 +29,144 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="#FFFFFF"
                 android:text="Sudar"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/kradjaProvalaButton"
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/ic_kradja_provala"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
-        <ImageButton
-            android:id="@+id/nasiljeButton"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/ic_nasilje"
-            android:background="@drawable/circular_button"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/kradjaProvalaButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_kradja_provala"
+                android:scaleType="centerCrop" />
 
-        <ImageButton
-            android:id="@+id/sumnjivaAktivnostButton"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/ic_sumnjiva_aktivnost"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Kradja/Provala"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/prijetnjeButton"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/ic_prijetnje"
-            android:background="@drawable/circular_button"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+        </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/hitniSlucajButton"
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/ic_hitni_slucaj"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
+
+            <ImageView
+                android:id="@+id/nasiljeButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_nasilje"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Nasilje u porodici/javnosti"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
+
+            <ImageView
+                android:id="@+id/sumnjivaAktivnostButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sumnjiva_aktivnost"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Sumnjiva aktivnost"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
+
+            <ImageView
+                android:id="@+id/prijetnjeButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_prijetnje"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Teroristicke pretnje"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
+
+            <ImageView
+                android:id="@+id/hitniSlucajButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_hitni_slucaj"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Hitni slučaj"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
 
     </GridLayout>
 </ScrollView>

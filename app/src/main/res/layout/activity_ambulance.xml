@@ -3,20 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
+
+
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnCount="2"
         android:rowCount="3"
-        android:padding="40dp">
+        android:padding="35dp">
 
+        <!-- Prva slika -->
         <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
             <ImageView
                 android:id="@+id/hitniSlucajevi"
@@ -29,71 +31,143 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="#FFFFFF"
                 android:text="Hitne medicinske situacije"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/povrede"
+        <!-- Povrede -->
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/povrede"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
-
-        <ImageButton
-            android:id="@+id/pogorsanoStanje"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/pogorsano_stanje"
-            android:background="@drawable/circular_button"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginBottom="8dp">
 
-        <ImageButton
-            android:id="@+id/trovanje"
+            <ImageView
+                android:id="@+id/povrede"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/povrede"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Povrede"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Pogoršano Stanje -->
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/trovanje"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
-        <ImageButton
-            android:id="@+id/mentalnaKriza"
+            <ImageView
+                android:id="@+id/pogorsanoStanje"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/pogorsano_stanje"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Pogoršano Stanje"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Trovanje -->
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/mentalna_kriza"
-            android:background="@drawable/circular_button"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginBottom="8dp">
 
-        <ImageButton
-            android:id="@+id/porodTrudovi"
+            <ImageView
+                android:id="@+id/trovanje"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/trovanje"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Trovanje"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Mentalna Kriza -->
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/porod_trudovi"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/mentalnaKriza"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/mentalna_kriza"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Mentalna Kriza"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Porod i Trudovi -->
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/porodTrudovi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/porod_trudovi"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Porod i Trudovi"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
     </GridLayout>
 </ScrollView>

@@ -10,13 +10,13 @@
         android:layout_height="match_parent"
         android:columnCount="2"
         android:rowCount="3"
-        android:padding="40dp">
+        android:padding="35dp">
 
         <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
             <ImageView
                 android:id="@+id/pozarButton"
@@ -29,71 +29,143 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Pozar"
+                android:background="#FFFFFF"
+                android:text="Požar"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/spasavanjeIzOpasnostiButton"
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/spasavanje_opasnost"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
-        <ImageButton
-            android:id="@+id/tehnickaIntervencijaButton"
+            <ImageView
+                android:id="@+id/spasavanjeIzOpasnostiButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/spasavanje_opasnost"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Spašavanje iz opasnosti"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/tehnicka_intervencija"
-            android:background="@drawable/circular_button"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
+
+            <ImageView
+                android:id="@+id/tehnickaIntervencijaButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/tehnicka_intervencija"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Tehnička intervencija"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginBottom="8dp">
 
-        <ImageButton
-            android:id="@+id/izlivanjeOpasnihStvariButton"
+            <ImageView
+                android:id="@+id/izlivanjeOpasnihStvariButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/izlivanje"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Izlivanje opasnih materija"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/izlivanje"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
-        <ImageButton
-            android:id="@+id/poplaveButton"
+            <ImageView
+                android:id="@+id/poplaveButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/poplave"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Poplave"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/poplave"
-            android:background="@drawable/circular_button"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="35dp">
 
-        <ImageButton
-            android:id="@+id/plinButton"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/plin"
-            android:background="@drawable/circular_button"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/plinButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/plin"
+                android:scaleType="centerCrop" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:text="Curenje gasa"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
 
     </GridLayout>
 </ScrollView>
