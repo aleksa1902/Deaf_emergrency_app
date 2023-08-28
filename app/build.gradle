@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.emergrency_app"
-        minSdkVersion 30
+        minSdkVersion 29
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
