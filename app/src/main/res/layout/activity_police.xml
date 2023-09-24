@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -18,23 +18,24 @@
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/sudarButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_sudar"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/blue_700" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Sudar"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
 
         </FrameLayout>
 
@@ -44,23 +45,24 @@
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/kradjaProvalaButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_kradja_provala"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/blue_700" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Kradja/Provala"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
 
         </FrameLayout>
 
@@ -70,23 +72,24 @@
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/nasiljeButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_nasilje"
-                tools:ignore="ContentDescription" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/blue_700" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Nasilje u porodici/javnosti"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
 
         </FrameLayout>
 
@@ -96,23 +99,24 @@
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/sumnjivaAktivnostButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_sumnjiva_aktivnost"
-                tools:ignore="ContentDescription" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/blue_700" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Sumnjiva aktivnost"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
 
         </FrameLayout>
 
@@ -122,23 +126,26 @@
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/prijetnjeButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_prijetnje"
-                android:scaleType="centerCrop" />
-
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/blue_700" />
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Teroristicke pretnje"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
 
         </FrameLayout>
 
@@ -148,23 +155,24 @@
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/hitniSlucajButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_hitni_slucaj"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/blue_700" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Hitni slučaj"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
 
         </FrameLayout>
 

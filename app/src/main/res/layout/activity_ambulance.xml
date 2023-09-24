@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <GridLayout
         android:layout_width="match_parent"
@@ -13,30 +11,30 @@
         android:rowCount="3"
         android:padding="35dp">
 
-        <!-- Prva slika -->
         <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/hitniSlucajevi"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/hitni_slucajevi"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/red" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Hitne medicinske situacije"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
         </FrameLayout>
 
         <!-- Povrede -->
@@ -46,23 +44,24 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/povrede"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/povrede"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/red" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Povrede"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
         </FrameLayout>
 
         <!-- Pogoršano Stanje -->
@@ -72,23 +71,24 @@
             android:layout_marginRight="35dp"
             android:layout_marginBottom="35dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/pogorsanoStanje"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/pogorsano_stanje"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/red" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Pogoršano Stanje"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
         </FrameLayout>
 
         <!-- Trovanje -->
@@ -98,23 +98,24 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/trovanje"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/trovanje"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/red" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Trovanje"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
         </FrameLayout>
 
         <!-- Mentalna Kriza -->
@@ -124,23 +125,24 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/mentalnaKriza"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/mentalna_kriza"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/red" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Mentalna Kriza"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
         </FrameLayout>
 
         <!-- Porod i Trudovi -->
@@ -150,23 +152,24 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/porodTrudovi"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/porod_trudovi"
-                android:scaleType="centerCrop" />
+                app:shapeAppearanceOverlay="@style/Circular"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/red" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
+                android:background="@drawable/textview_border"
                 android:text="Porod i Trudovi"
                 android:textAlignment="center"
-                android:textColor="#000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/ModernTextImg" />
         </FrameLayout>
 
     </GridLayout>

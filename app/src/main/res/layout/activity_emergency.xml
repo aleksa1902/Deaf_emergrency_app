@@ -15,9 +15,8 @@
     android:src="@drawable/police_image"
     android:background="?android:attr/selectableItemBackground"
     android:contentDescription="Policija"
-    android:scaleType="fitCenter"
-    android:layout_margin="8dp"
-        />
+    android:scaleType="centerCrop"
+    android:layout_margin="8dp" />
 
     <ImageButton
     android:id="@+id/ambulanceButton"
@@ -27,7 +26,7 @@
     android:src="@drawable/ambulance_image"
     android:background="?android:attr/selectableItemBackground"
     android:contentDescription="Hitna Pomoć"
-    android:scaleType="fitCenter"
+    android:scaleType="centerCrop"
     android:layout_margin="8dp"
         />
 
@@ -39,7 +38,7 @@
     android:src="@drawable/firefighters_image"
     android:background="?android:attr/selectableItemBackground"
     android:contentDescription="Vatrogasci"
-    android:scaleType="fitCenter"
+    android:scaleType="centerCrop"
     android:layout_margin="8dp"
         />
 
