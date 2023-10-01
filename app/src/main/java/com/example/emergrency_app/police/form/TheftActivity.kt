@@ -18,7 +18,9 @@ import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.example.emergrency_app.police.data.TheftData
+import com.example.emergrency_app.police.data.PoliceData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -49,14 +51,22 @@ class TheftActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         sendInfoButton.setOnClickListener {
-            val data = TheftData(
-                timeEditText.text.toString(),
-                locationEditText.text.toString(),
-                injuryEditText.text.toString(),
-                susSituationEditText.text.toString(),
-                suspectEditText.text.toString(),
-                null
+            val auth = FirebaseAuth.getInstance()
+            val currentUser: FirebaseUser? = auth.currentUser
+            val userId: String? = currentUser?.uid
+
+            val data = mapOf(
+                "Gde se tačno dogodila krađa/provala?" to locationEditText.text.toString(),
+                "Kada se dogodila krađa/provala?" to timeEditText.text.toString(),
+                "Kakva je bila priroda ukradene/uništene imovine?" to injuryEditText.text.toString(),
+                "Jeste li primijetili bilo kakve sumnjive aktivnosti prije krađe/provale?" to susSituationEditText.text.toString(),
+                "Da li imate li opis ili identifikaciju počinitelja?" to suspectEditText.text.toString()
             )
+
+            val policeData = PoliceData()
+            policeData.userId = userId.toString()
+            policeData.type = "theft_activity"
+            policeData.questions = data
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -64,13 +74,13 @@ class TheftActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (FirebaseHelper.isInternetConnected(this)) {
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(policeData, true)
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // No internet, send live location as SMS
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(policeData, false)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -84,7 +94,7 @@ class TheftActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendData(data: TheftData, net: Boolean) {
+    private fun getCurrentLocationAndSendData(data: PoliceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -93,8 +103,8 @@ class TheftActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "thieft_activity", this@TheftActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "police", this@TheftActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@TheftActivity)
                         }
@@ -117,18 +127,27 @@ class TheftActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val data = TheftData(
-                    timeEditText.text.toString(),
-                    locationEditText.text.toString(),
-                    injuryEditText.text.toString(),
-                    susSituationEditText.text.toString(),
-                    suspectEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Gde se tačno dogodila krađa/provala?" to locationEditText.text.toString(),
+                    "Kada se dogodila krađa/provala?" to timeEditText.text.toString(),
+                    "Kakva je bila priroda ukradene/uništene imovine?" to injuryEditText.text.toString(),
+                    "Jeste li primijetili bilo kakve sumnjive aktivnosti prije krađe/provale?" to susSituationEditText.text.toString(),
+                    "Da li imate li opis ili identifikaciju počinitelja?" to suspectEditText.text.toString()
                 )
+
+                val policeData = PoliceData()
+                policeData.userId = userId.toString()
+                policeData.type = "theft_activity"
+                policeData.questions = data
+
                 if(FirebaseHelper.isInternetConnected(this)){
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(policeData, true)
                 }else{
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(policeData, false)
                 }
             } else {
                 Toast.makeText(

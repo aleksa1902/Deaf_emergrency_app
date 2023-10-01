@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Da li je bilo prethodnih incidenata nasilja u obitelji?" />
+                android:text="Da li je bilo prethodnih incidenata nasilja u porodici?" />
 
             <EditText
                 android:id="@+id/susSituationEditText"
@@ -132,7 +132,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gde se točno događa nasilje?" />
+                android:text="Gde se tačno događa nasilje?" />
 
             <EditText
                 android:id="@+id/publicLocationEditText"

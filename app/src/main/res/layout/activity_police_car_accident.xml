@@ -55,7 +55,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Imate li informacije o vozačima uključenim u saobraćajnu nesreću?" />
+        android:text="Imate li informacije o vozačima uključenim u saobraćajnoj nesreći?" />
 
     <EditText
         android:id="@+id/infoDriversEditText"

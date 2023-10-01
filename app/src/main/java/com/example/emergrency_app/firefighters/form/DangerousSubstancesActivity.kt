@@ -19,7 +19,6 @@ import com.example.emergrency_app.firefighters.data.RemovingData
 import com.example.emergrency_app.firefighters.data.SpillingData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.example.emergrency_app.police.data.PublicViolenceData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 

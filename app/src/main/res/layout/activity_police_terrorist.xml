@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gdje se nalazi potencijalno metežna situacija?" />
+        android:text="Gde se nalazi potencijalno metežna situacija?" />
 
     <EditText
         android:id="@+id/locationEditText"
@@ -62,7 +62,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Postoje li svjedoci koji bi mogli pružiti dodatne informacije?" />
+        android:text="Postoje li svedoci koji bi mogli pružiti dodatne informacije?" />
 
     <EditText
         android:id="@+id/youEditText"

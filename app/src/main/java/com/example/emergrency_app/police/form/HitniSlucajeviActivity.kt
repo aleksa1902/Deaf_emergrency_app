@@ -18,7 +18,9 @@ import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.example.emergrency_app.police.data.HitniSlucajeviData
+import com.example.emergrency_app.police.data.PoliceData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -49,14 +51,22 @@ class HitniSlucajeviActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         sendInfoButton.setOnClickListener {
-            val hitniSlucajeviData = HitniSlucajeviData(
-                locationEditText.text.toString(),
-                natureEditText.text.toString(),
-                injuryEditText.text.toString(),
-                numPeopleEditText.text.toString(),
-                suspectEditText.text.toString(),
-                null
+            val auth = FirebaseAuth.getInstance()
+            val currentUser: FirebaseUser? = auth.currentUser
+            val userId: String? = currentUser?.uid
+
+            val data = mapOf(
+                "Gde se tačno događa incident?" to locationEditText.text.toString(),
+                "Kakva je priroda hitne situacije?" to natureEditText.text.toString(),
+                "Da li je neko povređen?" to injuryEditText.text.toString(),
+                "Koliko je osoba uključeno u incident?" to numPeopleEditText.text.toString(),
+                "Da li imate li opis ili identifikaciju počinitelja?" to suspectEditText.text.toString()
             )
+
+            val policeData = PoliceData()
+            policeData.userId = userId.toString()
+            policeData.type = "emergency"
+            policeData.questions = data
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -64,13 +74,13 @@ class HitniSlucajeviActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (FirebaseHelper.isInternetConnected(this)) {
-                    getCurrentLocationAndSendData(hitniSlucajeviData, true)
+                    getCurrentLocationAndSendData(policeData, true)
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // No internet, send live location as SMS
-                    getCurrentLocationAndSendData(hitniSlucajeviData, false)
+                    getCurrentLocationAndSendData(policeData, false)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -84,7 +94,7 @@ class HitniSlucajeviActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendData(hitniSlucajeviData: HitniSlucajeviData, net: Boolean) {
+    private fun getCurrentLocationAndSendData(hitniSlucajeviData: PoliceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -93,8 +103,8 @@ class HitniSlucajeviActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            hitniSlucajeviData.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(hitniSlucajeviData, "hitni_slucajevi", this@HitniSlucajeviActivity)
+                            hitniSlucajeviData.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(hitniSlucajeviData, "police", this@HitniSlucajeviActivity)
                         }else{
                             SmsHelper.sendSMS(hitniSlucajeviData, GeoPoint(location.latitude, location.longitude), this@HitniSlucajeviActivity)
                         }
@@ -117,18 +127,27 @@ class HitniSlucajeviActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val hitniSlucajeviData = HitniSlucajeviData(
-                    locationEditText.text.toString(),
-                    natureEditText.text.toString(),
-                    injuryEditText.text.toString(),
-                    numPeopleEditText.text.toString(),
-                    suspectEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Gde se tačno događa incident?" to locationEditText.text.toString(),
+                    "Kakva je priroda hitne situacije?" to natureEditText.text.toString(),
+                    "Da li je neko povređen?" to injuryEditText.text.toString(),
+                    "Koliko je osoba uključeno u incident?" to numPeopleEditText.text.toString(),
+                    "Da li imate li opis ili identifikaciju počinitelja?" to suspectEditText.text.toString()
                 )
+
+                val policeData = PoliceData()
+                policeData.userId = userId.toString()
+                policeData.type = "emergency"
+                policeData.questions = data
+
                 if(FirebaseHelper.isInternetConnected(this)){
-                    getCurrentLocationAndSendData(hitniSlucajeviData, true)
+                    getCurrentLocationAndSendData(policeData, true)
                 }else{
-                    getCurrentLocationAndSendData(hitniSlucajeviData, false)
+                    getCurrentLocationAndSendData(policeData, false)
                 }
             } else {
                 Toast.makeText(

@@ -18,7 +18,9 @@ import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.example.emergrency_app.police.data.IllegalData
+import com.example.emergrency_app.police.data.PoliceData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -49,14 +51,22 @@ class IllegalActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         sendInfoButton.setOnClickListener {
-            val data = IllegalData(
-                locationEditText.text.toString(),
-                illegalTypeEditText.text.toString(),
-                additionalInfoEditText.text.toString(),
-                youEditText.text.toString(),
-                suspectEditText.text.toString(),
-                null
+            val auth = FirebaseAuth.getInstance()
+            val currentUser: FirebaseUser? = auth.currentUser
+            val userId: String? = currentUser?.uid
+
+            val data = mapOf(
+                "Gdje se tačno događa sumnjiva aktivnost?" to locationEditText.text.toString(),
+                "Koju vrstu sumnjive aktivnosti primećujete?" to illegalTypeEditText.text.toString(),
+                "Možete li opisati osobe ili vozila povezana s tom aktivnošću?" to additionalInfoEditText.text.toString(),
+                "Jeste li svedok bilo kakvih drugih povezanih incidenata?" to youEditText.text.toString(),
+                "Postoji li trenutno pretnja za sigurnost?" to suspectEditText.text.toString()
             )
+
+            val policeData = PoliceData()
+            policeData.userId = userId.toString()
+            policeData.type = "illegal_activity"
+            policeData.questions = data
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -64,13 +74,13 @@ class IllegalActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (FirebaseHelper.isInternetConnected(this)) {
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(policeData, true)
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // No internet, send live location as SMS
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(policeData, false)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -84,7 +94,7 @@ class IllegalActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendData(data: IllegalData, net: Boolean) {
+    private fun getCurrentLocationAndSendData(data: PoliceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -93,8 +103,8 @@ class IllegalActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "illegal_activity", this@IllegalActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "police", this@IllegalActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@IllegalActivity)
                         }
@@ -117,18 +127,27 @@ class IllegalActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val data = IllegalData(
-                    locationEditText.text.toString(),
-                    illegalTypeEditText.text.toString(),
-                    additionalInfoEditText.text.toString(),
-                    youEditText.text.toString(),
-                    suspectEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Gdje se tačno događa sumnjiva aktivnost?" to locationEditText.text.toString(),
+                    "Koju vrstu sumnjive aktivnosti primećujete?" to illegalTypeEditText.text.toString(),
+                    "Možete li opisati osobe ili vozila povezana s tom aktivnošću?" to additionalInfoEditText.text.toString(),
+                    "Jeste li svedok bilo kakvih drugih povezanih incidenata?" to youEditText.text.toString(),
+                    "Postoji li trenutno pretnja za sigurnost?" to suspectEditText.text.toString()
                 )
+
+                val policeData = PoliceData()
+                policeData.userId = userId.toString()
+                policeData.type = "illegal_activity"
+                policeData.questions = data
+
                 if(FirebaseHelper.isInternetConnected(this)){
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(policeData, true)
                 }else{
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(policeData, false)
                 }
             } else {
                 Toast.makeText(

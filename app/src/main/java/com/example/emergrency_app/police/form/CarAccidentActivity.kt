@@ -19,9 +19,12 @@ import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.example.emergrency_app.police.data.CarAccidentData
+import com.example.emergrency_app.police.data.PoliceData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import org.json.JSONObject
 
 class CarAccidentActivity : AppCompatActivity() {
 
@@ -50,14 +53,22 @@ class CarAccidentActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         sendInfoButton.setOnClickListener {
-            val accidentData = CarAccidentData(
-                locationEditText.text.toString(),
-                carNumEditText.text.toString(),
-                injuryEditText.text.toString(),
-                infoDriversEditText.text.toString(),
-                suspectEditText.text.toString(),
-                null  // GeoPoint will be set in onLocationChanged if permission granted
+            val auth = FirebaseAuth.getInstance()
+            val currentUser: FirebaseUser? = auth.currentUser
+            val userId: String? = currentUser?.uid
+
+            val data = mapOf(
+                "Gde se dogodila saobraćajna nesreća nesreća?" to locationEditText.text.toString(),
+                "Koliko je vozila bilo uključeno?" to carNumEditText.text.toString(),
+                "Da li je neko povređen?" to injuryEditText.text.toString(),
+                "Imate li informacije o vozačima uključenim u saobraćajnoj nesreći?" to infoDriversEditText.text.toString(),
+                "Jeste li primijetili bilo kakvo kršenje saobraćajnih pravila ili nepravilno ponašanje vozača?" to suspectEditText.text.toString()
             )
+
+            val policeData = PoliceData()
+            policeData.userId = userId.toString()
+            policeData.type = "car_accident"
+            policeData.questions = data
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -65,13 +76,13 @@ class CarAccidentActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (FirebaseHelper.isInternetConnected(this)) {
-                    getCurrentLocationAndSendData(accidentData, true)
+                    getCurrentLocationAndSendData(policeData, true)
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // No internet, send live location as SMS
-                    getCurrentLocationAndSendData(accidentData, false)
+                    getCurrentLocationAndSendData(policeData, false)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -85,7 +96,7 @@ class CarAccidentActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendData(accidentData: CarAccidentData, net: Boolean) {
+    private fun getCurrentLocationAndSendData(accidentData: PoliceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -94,8 +105,8 @@ class CarAccidentActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            accidentData.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(accidentData, "car_accidents", this@CarAccidentActivity)
+                            accidentData.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(accidentData, "police", this@CarAccidentActivity)
                         }else{
                             SmsHelper.sendSMS(accidentData, GeoPoint(location.latitude, location.longitude), this@CarAccidentActivity)
                         }
@@ -118,18 +129,27 @@ class CarAccidentActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val accidentData = CarAccidentData(
-                    locationEditText.text.toString(),
-                    carNumEditText.text.toString(),
-                    injuryEditText.text.toString(),
-                    infoDriversEditText.text.toString(),
-                    suspectEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Gde se dogodila saobraćajna nesreća nesreća?" to locationEditText.text.toString(),
+                    "Koliko je vozila bilo uključeno?" to carNumEditText.text.toString(),
+                    "Da li je neko povređen?" to injuryEditText.text.toString(),
+                    "Imate li informacije o vozačima uključenim u saobraćajnoj nesreći?" to infoDriversEditText.text.toString(),
+                    "Jeste li primijetili bilo kakvo kršenje saobraćajnih pravila ili nepravilno ponašanje vozača?" to suspectEditText.text.toString()
                 )
+
+                val policeData = PoliceData()
+                policeData.userId = userId.toString()
+                policeData.type = "car_accident"
+                policeData.questions = data
+
                 if(FirebaseHelper.isInternetConnected(this)){
-                    getCurrentLocationAndSendData(accidentData, true)
+                    getCurrentLocationAndSendData(policeData, true)
                 }else{
-                    getCurrentLocationAndSendData(accidentData, false)
+                    getCurrentLocationAndSendData(policeData, false)
                 }
             } else {
                 Toast.makeText(

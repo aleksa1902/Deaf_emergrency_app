@@ -17,9 +17,9 @@ import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.example.emergrency_app.police.data.FamilyViolenceData
-import com.example.emergrency_app.police.data.PublicViolenceData
-import com.example.emergrency_app.police.data.TheftData
+import com.example.emergrency_app.police.data.PoliceData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -98,15 +98,23 @@ class ViolenceActivity : AppCompatActivity() {
 
         buttonSendInformation.setOnClickListener {
             if(check && familyViolence){
-                val data = FamilyViolenceData(
-                    familyViolencePersonEditText.text.toString(),
-                    familyInjuryEditText.text.toString(),
-                    youEditText.text.toString(),
-                    susSituationEditText.text.toString(),
-                    suspectEditText.text.toString(),
-                    familyLocationEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Ko je bio uključen u nasilje?" to familyViolencePersonEditText.text.toString(),
+                    "Jesu li povrede vidljive?" to familyInjuryEditText.text.toString(),
+                    "Jeste li svedok nasilja ili žrtva?" to youEditText.text.toString(),
+                    "Da li je bilo prethodnih incidenata nasilja u porodici?" to susSituationEditText.text.toString(),
+                    "Da li je počinitelj još uvek prisutan na mestu događaja?" to suspectEditText.text.toString(),
+                    "Gde se nalazite?" to familyLocationEditText.text.toString()
                 )
+
+                val policeData = PoliceData()
+                policeData.userId = userId.toString()
+                policeData.type = "family_violence"
+                policeData.questions = data
 
                 if (ContextCompat.checkSelfPermission(
                         this,
@@ -114,13 +122,13 @@ class ViolenceActivity : AppCompatActivity() {
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     if (FirebaseHelper.isInternetConnected(this)) {
-                        getCurrentLocationAndSendDataFamily(data, true)
+                        getCurrentLocationAndSendDataFamily(policeData, true)
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         // No internet, send live location as SMS
-                        getCurrentLocationAndSendDataFamily(data, false)
+                        getCurrentLocationAndSendDataFamily(policeData, false)
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
@@ -132,14 +140,22 @@ class ViolenceActivity : AppCompatActivity() {
                     )
                 }
             }else{
-                val data = PublicViolenceData(
-                    publicLocationEditText.text.toString(),
-                    publicNumberEditText.text.toString(),
-                    publicYouEditText.text.toString(),
-                    publicInfoEditText.text.toString(),
-                    publicAdditionalInfoEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Gde se tačno događa nasilje?" to publicLocationEditText.text.toString(),
+                    "Koliko je osoba uključeno u tučnjavu ili nerede?" to publicNumberEditText.text.toString(),
+                    "Jeste li svedok nasilja ili žrtva?" to publicYouEditText.text.toString(),
+                    "Imate li opis ili identifikaciju napadača?" to publicInfoEditText.text.toString(),
+                    "Da li je neko povređen i da li je potrebna medicinska pomoć?" to publicAdditionalInfoEditText.text.toString()
                 )
+
+                val policeData = PoliceData()
+                policeData.userId = userId.toString()
+                policeData.type = "public_violence"
+                policeData.questions = data
 
                 if (ContextCompat.checkSelfPermission(
                         this,
@@ -147,13 +163,13 @@ class ViolenceActivity : AppCompatActivity() {
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     if (FirebaseHelper.isInternetConnected(this)) {
-                        getCurrentLocationAndSendDataPublic(data, true)
+                        getCurrentLocationAndSendDataPublic(policeData, true)
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         // No internet, send live location as SMS
-                        getCurrentLocationAndSendDataPublic(data, false)
+                        getCurrentLocationAndSendDataPublic(policeData, false)
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
@@ -168,7 +184,7 @@ class ViolenceActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendDataFamily(data: FamilyViolenceData, net: Boolean) {
+    private fun getCurrentLocationAndSendDataFamily(data: PoliceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -177,8 +193,8 @@ class ViolenceActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "family_violence", this@ViolenceActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "police", this@ViolenceActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@ViolenceActivity)
                         }
@@ -193,7 +209,7 @@ class ViolenceActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendDataPublic(data: PublicViolenceData, net: Boolean) {
+    private fun getCurrentLocationAndSendDataPublic(data: PoliceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -202,8 +218,8 @@ class ViolenceActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "public_violence", this@ViolenceActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "police", this@ViolenceActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@ViolenceActivity)
                         }
@@ -227,35 +243,51 @@ class ViolenceActivity : AppCompatActivity() {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if(familyViolence){
-                    val data = FamilyViolenceData(
-                        familyViolencePersonEditText.text.toString(),
-                        familyInjuryEditText.text.toString(),
-                        youEditText.text.toString(),
-                        susSituationEditText.text.toString(),
-                        suspectEditText.text.toString(),
-                        familyLocationEditText.text.toString(),
-                        null
+                    val auth = FirebaseAuth.getInstance()
+                    val currentUser: FirebaseUser? = auth.currentUser
+                    val userId: String? = currentUser?.uid
+
+                    val data = mapOf(
+                        "Ko je bio uključen u nasilje?" to familyViolencePersonEditText.text.toString(),
+                        "Jesu li povrede vidljive?" to familyInjuryEditText.text.toString(),
+                        "Jeste li svedok nasilja ili žrtva?" to youEditText.text.toString(),
+                        "Da li je bilo prethodnih incidenata nasilja u porodici?" to susSituationEditText.text.toString(),
+                        "Da li je počinitelj još uvek prisutan na mestu događaja?" to suspectEditText.text.toString(),
+                        "Gde se nalazite?" to familyLocationEditText.text.toString()
                     )
 
+                    val policeData = PoliceData()
+                    policeData.userId = userId.toString()
+                    policeData.type = "family_violence"
+                    policeData.questions = data
+
                     if(FirebaseHelper.isInternetConnected(this)){
-                        getCurrentLocationAndSendDataFamily(data, true)
+                        getCurrentLocationAndSendDataFamily(policeData, true)
                     }else{
-                        getCurrentLocationAndSendDataFamily(data, false)
+                        getCurrentLocationAndSendDataFamily(policeData, false)
                     }
                 }else{
-                    val data = PublicViolenceData(
-                        publicLocationEditText.text.toString(),
-                        publicNumberEditText.text.toString(),
-                        publicYouEditText.text.toString(),
-                        publicInfoEditText.text.toString(),
-                        publicAdditionalInfoEditText.text.toString(),
-                        null
+                    val auth = FirebaseAuth.getInstance()
+                    val currentUser: FirebaseUser? = auth.currentUser
+                    val userId: String? = currentUser?.uid
+
+                    val data = mapOf(
+                        "Gde se tačno događa nasilje?" to publicLocationEditText.text.toString(),
+                        "Koliko je osoba uključeno u tučnjavu ili nerede?" to publicNumberEditText.text.toString(),
+                        "Jeste li svedok nasilja ili žrtva?" to publicYouEditText.text.toString(),
+                        "Imate li opis ili identifikaciju napadača?" to publicInfoEditText.text.toString(),
+                        "Da li je neko povređen i da li je potrebna medicinska pomoć?" to publicAdditionalInfoEditText.text.toString()
                     )
 
+                    val policeData = PoliceData()
+                    policeData.userId = userId.toString()
+                    policeData.type = "public_violence"
+                    policeData.questions = data
+
                     if(FirebaseHelper.isInternetConnected(this)){
-                        getCurrentLocationAndSendDataPublic(data, true)
+                        getCurrentLocationAndSendDataPublic(policeData, true)
                     }else{
-                        getCurrentLocationAndSendDataPublic(data, false)
+                        getCurrentLocationAndSendDataPublic(policeData, false)
                     }
                 }
             } else {

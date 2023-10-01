@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gdje se točno događa sumnjiva aktivnost?" />
+        android:text="Gdje se tačno događa sumnjiva aktivnost?" />
 
     <EditText
         android:id="@+id/locationEditText"
@@ -62,7 +62,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Postoji li trenutno prietnja za sigurnost?" />
+        android:text="Postoji li trenutno pretnja za sigurnost?" />
 
     <EditText
         android:id="@+id/suspectEditText"
