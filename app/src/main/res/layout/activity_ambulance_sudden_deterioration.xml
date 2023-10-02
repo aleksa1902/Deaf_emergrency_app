@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jesu li prisutni specifični faktori koji su mogli pridonijeti pogoršanju?" />
+        android:text="Jesu li prisutni specifični faktori koji su mogli pridoneti pogoršanju?" />
 
     <EditText
         android:id="@+id/factorsEditText"
@@ -51,7 +51,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Je li osoba imala slične simptome prije?" />
+        android:text="Je li osoba imala slične simptome pre?" />
 
     <EditText
         android:id="@+id/situationEditText"
@@ -62,7 +62,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jeste li primijetili promjene u disanju, pulsu ili svesti?" />
+        android:text="Jeste li primetili promjene u disanju, pulsu ili svesti?" />
 
     <EditText
         android:id="@+id/changesEditText"

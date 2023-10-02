@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.ambulance.data.ChildBirthData
 import com.example.emergrency_app.firefighters.data.FireData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper

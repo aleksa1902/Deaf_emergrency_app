@@ -16,9 +16,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.ambulance.data.MentalCrisesData
+import com.example.emergrency_app.ambulance.data.AmbulanceData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -49,14 +51,22 @@ class MentalCrisesActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         sendInfoButton.setOnClickListener {
-            val data = MentalCrisesData(
-                durationEditText.text.toString(),
-                historyEditText.text.toString(),
-                medicinesEditText.text.toString(),
-                mentalSafeEditText.text.toString(),
-                symptomsEditText.text.toString(),
-                null
+            val auth = FirebaseAuth.getInstance()
+            val currentUser: FirebaseUser? = auth.currentUser
+            val userId: String? = currentUser?.uid
+
+            val data = mapOf(
+                "Koliko dugo su prisutni ti simptomi?" to durationEditText.text.toString(),
+                "Je li osoba već bila dijagnosticirana s mentalnim poremećajem?" to historyEditText.text.toString(),
+                "Je li osoba pod terapijom ili uzima lekove?" to medicinesEditText.text.toString(),
+                "Je li osoba trenutno sigurna za sebe ili druge?" to mentalSafeEditText.text.toString(),
+                "Koje simptome osoba doživljava (depresija, anksioznost, sucidne misli itd.)?" to symptomsEditText.text.toString()
             )
+
+            val ambulanceData = AmbulanceData()
+            ambulanceData.userId = userId.toString()
+            ambulanceData.type = "medical_crises"
+            ambulanceData.questions = data
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -64,13 +74,13 @@ class MentalCrisesActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (FirebaseHelper.isInternetConnected(this)) {
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(ambulanceData, true)
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // No internet, send live location as SMS
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(ambulanceData, false)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -84,7 +94,7 @@ class MentalCrisesActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendData(data: MentalCrisesData, net: Boolean) {
+    private fun getCurrentLocationAndSendData(data: AmbulanceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -93,8 +103,8 @@ class MentalCrisesActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "mental_crises", this@MentalCrisesActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "ambulance", this@MentalCrisesActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@MentalCrisesActivity)
                         }
@@ -117,18 +127,27 @@ class MentalCrisesActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val data = MentalCrisesData(
-                    durationEditText.text.toString(),
-                    historyEditText.text.toString(),
-                    medicinesEditText.text.toString(),
-                    mentalSafeEditText.text.toString(),
-                    symptomsEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Koliko dugo su prisutni ti simptomi?" to durationEditText.text.toString(),
+                    "Je li osoba već bila dijagnosticirana s mentalnim poremećajem?" to historyEditText.text.toString(),
+                    "Je li osoba pod terapijom ili uzima lekove?" to medicinesEditText.text.toString(),
+                    "Je li osoba trenutno sigurna za sebe ili druge?" to mentalSafeEditText.text.toString(),
+                    "Koje simptome osoba doživljava (depresija, anksioznost, sucidne misli itd.)?" to symptomsEditText.text.toString()
                 )
+
+                val ambulanceData = AmbulanceData()
+                ambulanceData.userId = userId.toString()
+                ambulanceData.type = "medical_crises"
+                ambulanceData.questions = data
+
                 if(FirebaseHelper.isInternetConnected(this)){
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(ambulanceData, true)
                 }else{
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(ambulanceData, false)
                 }
             } else {
                 Toast.makeText(

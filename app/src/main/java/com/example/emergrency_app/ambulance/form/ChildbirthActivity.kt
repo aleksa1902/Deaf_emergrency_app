@@ -16,9 +16,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.ambulance.data.ChildBirthData
+import com.example.emergrency_app.ambulance.data.AmbulanceData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -49,14 +51,22 @@ class ChildbirthActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         sendInfoButton.setOnClickListener {
-            val data = ChildBirthData(
-                durationLaboursEditText.text.toString(),
-                complicationsEditText.text.toString(),
-                waterBreakingEditText.text.toString(),
-                additionalInfoEditText.text.toString(),
-                laboursEditText.text.toString(),
-                null
+            val auth = FirebaseAuth.getInstance()
+            val currentUser: FirebaseUser? = auth.currentUser
+            val userId: String? = currentUser?.uid
+
+            val data = mapOf(
+                "Koliko traju trudovi?" to durationLaboursEditText.text.toString(),
+                "Postoje li komplikacije ili posebne okolnosti vezane uz trudnoću?" to complicationsEditText.text.toString(),
+                "Jeste li primijetili probijanje vodenjaka?" to waterBreakingEditText.text.toString(),
+                "Je li trudnica imala prethodne probleme s trudnoćom ili porodom?" to additionalInfoEditText.text.toString(),
+                "Koliko su česti trudovi?" to laboursEditText.text.toString()
             )
+
+            val ambulanceData = AmbulanceData()
+            ambulanceData.userId = userId.toString()
+            ambulanceData.type = "childbirth"
+            ambulanceData.questions = data
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -64,13 +74,13 @@ class ChildbirthActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (FirebaseHelper.isInternetConnected(this)) {
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(ambulanceData, true)
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // No internet, send live location as SMS
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(ambulanceData, false)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -84,7 +94,7 @@ class ChildbirthActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendData(data: ChildBirthData, net: Boolean) {
+    private fun getCurrentLocationAndSendData(data: AmbulanceData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -93,8 +103,8 @@ class ChildbirthActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "child_birth", this@ChildbirthActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "ambulance", this@ChildbirthActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@ChildbirthActivity)
                         }
@@ -117,18 +127,27 @@ class ChildbirthActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val data = ChildBirthData(
-                    durationLaboursEditText.text.toString(),
-                    complicationsEditText.text.toString(),
-                    waterBreakingEditText.text.toString(),
-                    additionalInfoEditText.text.toString(),
-                    laboursEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Koliko traju trudovi?" to durationLaboursEditText.text.toString(),
+                    "Postoje li komplikacije ili posebne okolnosti vezane uz trudnoću?" to complicationsEditText.text.toString(),
+                    "Jeste li primijetili probijanje vodenjaka?" to waterBreakingEditText.text.toString(),
+                    "Je li trudnica imala prethodne probleme s trudnoćom ili porodom?" to additionalInfoEditText.text.toString(),
+                    "Koliko su česti trudovi?" to laboursEditText.text.toString()
                 )
+
+                val ambulanceData = AmbulanceData()
+                ambulanceData.userId = userId.toString()
+                ambulanceData.type = "childbirth"
+                ambulanceData.questions = data
+
                 if(FirebaseHelper.isInternetConnected(this)){
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(ambulanceData, true)
                 }else{
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(ambulanceData, false)
                 }
             } else {
                 Toast.makeText(
