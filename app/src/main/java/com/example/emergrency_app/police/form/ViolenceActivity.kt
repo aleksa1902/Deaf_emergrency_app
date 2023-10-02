@@ -115,6 +115,7 @@ class ViolenceActivity : AppCompatActivity() {
                 policeData.userId = userId.toString()
                 policeData.type = "family_violence"
                 policeData.questions = data
+                policeData.status = "in_progress"
 
                 if (ContextCompat.checkSelfPermission(
                         this,
@@ -156,6 +157,7 @@ class ViolenceActivity : AppCompatActivity() {
                 policeData.userId = userId.toString()
                 policeData.type = "public_violence"
                 policeData.questions = data
+                policeData.status = "in_progress"
 
                 if (ContextCompat.checkSelfPermission(
                         this,
@@ -260,6 +262,7 @@ class ViolenceActivity : AppCompatActivity() {
                     policeData.userId = userId.toString()
                     policeData.type = "family_violence"
                     policeData.questions = data
+                    policeData.status = "in_progress"
 
                     if(FirebaseHelper.isInternetConnected(this)){
                         getCurrentLocationAndSendDataFamily(policeData, true)
@@ -283,6 +286,7 @@ class ViolenceActivity : AppCompatActivity() {
                     policeData.userId = userId.toString()
                     policeData.type = "public_violence"
                     policeData.questions = data
+                    policeData.status = "in_progress"
 
                     if(FirebaseHelper.isInternetConnected(this)){
                         getCurrentLocationAndSendDataPublic(policeData, true)

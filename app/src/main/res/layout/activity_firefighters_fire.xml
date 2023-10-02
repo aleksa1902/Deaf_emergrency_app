@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gdje se nalazi požar?" />
+        android:text="Gde se nalazi požar?" />
 
     <EditText
         android:id="@+id/fireLocationEditText"

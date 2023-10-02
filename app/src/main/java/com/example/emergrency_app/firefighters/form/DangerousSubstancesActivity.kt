@@ -15,10 +15,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.firefighters.data.RemovingData
-import com.example.emergrency_app.firefighters.data.SpillingData
+import com.example.emergrency_app.firefighters.data.FirefighterData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -96,14 +97,23 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         // Ovdje dodajte kod za obradu informacija kad korisnik pritisne "Posalji informacije"
         buttonSendInformation.setOnClickListener {
             if(check && spilingThing){
-                val data = SpillingData(
-                    thingPersonEditText.text.toString(),
-                    locationThingEditText.text.toString(),
-                    dangerEditText.text.toString(),
-                    numEditText.text.toString(),
-                    additionalInfoEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Koja stvar izliva i koliko je opasna?" to thingPersonEditText.text.toString(),
+                    "Gde se dogodilo izlivanje?" to locationThingEditText.text.toString(),
+                    "Postoji li opasnost od eksplozije ili širenja stvari?" to dangerEditText.text.toString(),
+                    "Jeste li primetili povređene osobe ili prisutnost opasnih para?" to numEditText.text.toString(),
+                    "Imate li informacije o količini i vrsti stvari?" to additionalInfoEditText.text.toString()
                 )
+
+                val firefighterData = FirefighterData()
+                firefighterData.userId = userId.toString()
+                firefighterData.type = "spiling_thing"
+                firefighterData.questions = data
+                firefighterData.status = "in_progress"
 
                 if (ContextCompat.checkSelfPermission(
                         this,
@@ -111,13 +121,13 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     if (FirebaseHelper.isInternetConnected(this)) {
-                        getCurrentLocationAndSendDataSpilling(data, true)
+                        getCurrentLocationAndSendDataSpilling(firefighterData, true)
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         // No internet, send live location as SMS
-                        getCurrentLocationAndSendDataSpilling(data, false)
+                        getCurrentLocationAndSendDataSpilling(firefighterData, false)
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
@@ -129,14 +139,23 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                     )
                 }
             }else{
-                val data = RemovingData(
-                    hazardousEditText.text.toString(),
-                    hazardousLocationEditText.text.toString(),
-                    dangerSpreadEditText.text.toString(),
-                    safeEditText.text.toString(),
-                    numPersonEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Koja je vrsta opasnog materijala ili hemikalije?" to hazardousEditText.text.toString(),
+                    "Gde se nalazi stvar koja zahteva uklanjanje?" to hazardousLocationEditText.text.toString(),
+                    "Postoji li opasnost od širenja stvari?" to dangerSpreadEditText.text.toString(),
+                    "Je li područje sigurno za intervenciju ili su potrebne posebne mere zaštite?" to safeEditText.text.toString(),
+                    "Jeste li primijetili prisutnost povređenih osoba?" to numPersonEditText.text.toString()
                 )
+
+                val firefighterData = FirefighterData()
+                firefighterData.userId = userId.toString()
+                firefighterData.type = "hazardous"
+                firefighterData.questions = data
+                firefighterData.status = "in_progress"
 
                 if (ContextCompat.checkSelfPermission(
                         this,
@@ -144,13 +163,13 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     if (FirebaseHelper.isInternetConnected(this)) {
-                        getCurrentLocationAndSendDataRemoving(data, true)
+                        getCurrentLocationAndSendDataRemoving(firefighterData, true)
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     } else {
                         // No internet, send live location as SMS
-                        getCurrentLocationAndSendDataRemoving(data, false)
+                        getCurrentLocationAndSendDataRemoving(firefighterData, false)
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
@@ -165,7 +184,7 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendDataSpilling(data: SpillingData, net: Boolean) {
+    private fun getCurrentLocationAndSendDataSpilling(data: FirefighterData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -174,8 +193,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "spilling_hazardous", this@DangerousSubstancesActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "firefighters", this@DangerousSubstancesActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@DangerousSubstancesActivity)
                         }
@@ -190,7 +209,7 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendDataRemoving(data: RemovingData, net: Boolean) {
+    private fun getCurrentLocationAndSendDataRemoving(data: FirefighterData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -199,8 +218,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "removing_hazardous", this@DangerousSubstancesActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "firefighters", this@DangerousSubstancesActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@DangerousSubstancesActivity)
                         }
@@ -224,34 +243,52 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if(spilingThing){
-                    val data = SpillingData(
-                        thingPersonEditText.text.toString(),
-                        locationThingEditText.text.toString(),
-                        dangerEditText.text.toString(),
-                        numEditText.text.toString(),
-                        additionalInfoEditText.text.toString(),
-                        null
+                    val auth = FirebaseAuth.getInstance()
+                    val currentUser: FirebaseUser? = auth.currentUser
+                    val userId: String? = currentUser?.uid
+
+                    val data = mapOf(
+                        "Koja stvar izliva i koliko je opasna?" to thingPersonEditText.text.toString(),
+                        "Gde se dogodilo izlivanje?" to locationThingEditText.text.toString(),
+                        "Postoji li opasnost od eksplozije ili širenja stvari?" to dangerEditText.text.toString(),
+                        "Jeste li primetili povređene osobe ili prisutnost opasnih para?" to numEditText.text.toString(),
+                        "Imate li informacije o količini i vrsti stvari?" to additionalInfoEditText.text.toString()
                     )
 
+                    val firefighterData = FirefighterData()
+                    firefighterData.userId = userId.toString()
+                    firefighterData.type = "spiling_thing"
+                    firefighterData.questions = data
+                    firefighterData.status = "in_progress"
+
                     if(FirebaseHelper.isInternetConnected(this)){
-                        getCurrentLocationAndSendDataSpilling(data, true)
+                        getCurrentLocationAndSendDataSpilling(firefighterData, true)
                     }else{
-                        getCurrentLocationAndSendDataSpilling(data, false)
+                        getCurrentLocationAndSendDataSpilling(firefighterData, false)
                     }
                 }else{
-                    val data = RemovingData(
-                        hazardousEditText.text.toString(),
-                        hazardousLocationEditText.text.toString(),
-                        dangerSpreadEditText.text.toString(),
-                        safeEditText.text.toString(),
-                        numPersonEditText.text.toString(),
-                        null
+                    val auth = FirebaseAuth.getInstance()
+                    val currentUser: FirebaseUser? = auth.currentUser
+                    val userId: String? = currentUser?.uid
+
+                    val data = mapOf(
+                        "Koja je vrsta opasnog materijala ili hemikalije?" to hazardousEditText.text.toString(),
+                        "Gde se nalazi stvar koja zahteva uklanjanje?" to hazardousLocationEditText.text.toString(),
+                        "Postoji li opasnost od širenja stvari?" to dangerSpreadEditText.text.toString(),
+                        "Je li područje sigurno za intervenciju ili su potrebne posebne mere zaštite?" to safeEditText.text.toString(),
+                        "Jeste li primijetili prisutnost povređenih osoba?" to numPersonEditText.text.toString()
                     )
 
+                    val firefighterData = FirefighterData()
+                    firefighterData.userId = userId.toString()
+                    firefighterData.type = "hazardous"
+                    firefighterData.questions = data
+                    firefighterData.status = "in_progress"
+
                     if(FirebaseHelper.isInternetConnected(this)){
-                        getCurrentLocationAndSendDataRemoving(data, true)
+                        getCurrentLocationAndSendDataRemoving(firefighterData, true)
                     }else{
-                        getCurrentLocationAndSendDataRemoving(data, false)
+                        getCurrentLocationAndSendDataRemoving(firefighterData, false)
                     }
                 }
             } else {

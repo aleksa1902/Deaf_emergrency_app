@@ -29,7 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gdje se dogodio problem (dizalo, tunel, visina itd.)?" />
+        android:text="Gde se dogodio problem (lift, tunel itd.)?" />
 
     <EditText
         android:id="@+id/dangerLocationEditText"

@@ -16,9 +16,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.emergrency_app.MainActivity
 import com.example.emergrency_app.R
-import com.example.emergrency_app.firefighters.data.RescureDangerData
+import com.example.emergrency_app.firefighters.data.FirefighterData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
@@ -49,14 +51,23 @@ class RescureDangerActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         sendInfoButton.setOnClickListener {
-            val data = RescureDangerData(
-                dangerNatureEditText.text.toString(),
-                numEditText.text.toString(),
-                currLocationEditText.text.toString(),
-                dangerEditText.text.toString(),
-                additionalInfoEditText.text.toString(),
-                null
+            val auth = FirebaseAuth.getInstance()
+            val currentUser: FirebaseUser? = auth.currentUser
+            val userId: String? = currentUser?.uid
+
+            val data = mapOf(
+                "Koja je priroda opasnosti?" to dangerNatureEditText.text.toString(),
+                "Koliko je osoba ili životinja uključeno?" to numEditText.text.toString(),
+                "Gde se taćno nalaze osobe koje treba spasiti?" to currLocationEditText.text.toString(),
+                "Jesu li osobe zarobljene ili imaju povrede?" to dangerEditText.text.toString(),
+                "Je li područje stabilno ili postoji rizik od urušavanja?" to additionalInfoEditText.text.toString()
             )
+
+            val firefighterData = FirefighterData()
+            firefighterData.userId = userId.toString()
+            firefighterData.type = "rescure_danger"
+            firefighterData.questions = data
+            firefighterData.status = "in_progress"
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -64,13 +75,13 @@ class RescureDangerActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (FirebaseHelper.isInternetConnected(this)) {
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(firefighterData, true)
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     // No internet, send live location as SMS
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(firefighterData, false)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -84,7 +95,7 @@ class RescureDangerActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCurrentLocationAndSendData(data: RescureDangerData, net: Boolean) {
+    private fun getCurrentLocationAndSendData(data: FirefighterData, net: Boolean) {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
@@ -93,8 +104,8 @@ class RescureDangerActivity : AppCompatActivity() {
                 object : LocationListener {
                     override fun onLocationChanged(location: Location) {
                         if(net){
-                            data.geografskaLokacija = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "rescure_danger", this@RescureDangerActivity)
+                            data.geoLocation = GeoPoint(location.latitude, location.longitude)
+                            FirebaseHelper.saveData(data, "firefighters", this@RescureDangerActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@RescureDangerActivity)
                         }
@@ -117,18 +128,28 @@ class RescureDangerActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val data = RescureDangerData(
-                    dangerNatureEditText.text.toString(),
-                    numEditText.text.toString(),
-                    currLocationEditText.text.toString(),
-                    dangerEditText.text.toString(),
-                    additionalInfoEditText.text.toString(),
-                    null
+                val auth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser? = auth.currentUser
+                val userId: String? = currentUser?.uid
+
+                val data = mapOf(
+                    "Koja je priroda opasnosti?" to dangerNatureEditText.text.toString(),
+                    "Koliko je osoba ili životinja uključeno?" to numEditText.text.toString(),
+                    "Gde se taćno nalaze osobe koje treba spasiti?" to currLocationEditText.text.toString(),
+                    "Jesu li osobe zarobljene ili imaju povrede?" to dangerEditText.text.toString(),
+                    "Je li područje stabilno ili postoji rizik od urušavanja?" to additionalInfoEditText.text.toString()
                 )
+
+                val firefighterData = FirefighterData()
+                firefighterData.userId = userId.toString()
+                firefighterData.type = "rescure_danger"
+                firefighterData.questions = data
+                firefighterData.status = "in_progress"
+
                 if(FirebaseHelper.isInternetConnected(this)){
-                    getCurrentLocationAndSendData(data, true)
+                    getCurrentLocationAndSendData(firefighterData, true)
                 }else{
-                    getCurrentLocationAndSendData(data, false)
+                    getCurrentLocationAndSendData(firefighterData, false)
                 }
             } else {
                 Toast.makeText(

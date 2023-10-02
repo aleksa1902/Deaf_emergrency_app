@@ -67,6 +67,7 @@ class HitniSlucajeviActivity : AppCompatActivity() {
             policeData.userId = userId.toString()
             policeData.type = "emergency"
             policeData.questions = data
+            policeData.status = "in_progress"
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -143,6 +144,7 @@ class HitniSlucajeviActivity : AppCompatActivity() {
                 policeData.userId = userId.toString()
                 policeData.type = "emergency"
                 policeData.questions = data
+                policeData.status = "in_progress"
 
                 if(FirebaseHelper.isInternetConnected(this)){
                     getCurrentLocationAndSendData(policeData, true)

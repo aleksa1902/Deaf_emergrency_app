@@ -71,7 +71,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Postoji li opasnost od eksplozije ili širenja tvari?" />
+            android:text="Postoji li opasnost od eksplozije ili širenja stvari?" />
 
         <EditText
             android:id="@+id/dangerEditText"
@@ -82,7 +82,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jeste li primijetili ozlijeđene osobe ili prisutnost opasnih para?" />
+            android:text="Jeste li primetili povređene osobe ili prisutnost opasnih para?" />
 
         <EditText
             android:id="@+id/numEditText"
@@ -93,7 +93,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Imate li informacije o količini i vrsti izlijevane tvari?" />
+            android:text="Imate li informacije o količini i vrsti stvari?" />
 
         <EditText
             android:id="@+id/additionalInfoEditText"
@@ -116,7 +116,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Koja je vrsta opasnog materijala ili kemikalije?" />
+            android:text="Koja je vrsta opasnog materijala ili hemikalije?" />
 
         <EditText
             android:id="@+id/hazardousEditText"
@@ -127,7 +127,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gdje se nalazi tvar koja zahtijeva uklanjanje?" />
+            android:text="Gde se nalazi stvar koja zahteva uklanjanje?" />
 
         <EditText
             android:id="@+id/hazardousLocationEditText"
@@ -138,7 +138,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Postoji li opasnost od širenja tvari?" />
+            android:text="Postoji li opasnost od širenja stvari?" />
 
         <EditText
             android:id="@+id/dangerSpreadEditText"
@@ -160,7 +160,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jeste li primijetili prisutnost ozlijeđenih osoba?" />
+            android:text="Jeste li primijetili prisutnost povređenih osoba?" />
 
         <EditText
             android:id="@+id/numPersonEditText"

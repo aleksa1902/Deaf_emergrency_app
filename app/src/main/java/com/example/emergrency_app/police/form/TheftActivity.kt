@@ -67,6 +67,7 @@ class TheftActivity : AppCompatActivity() {
             policeData.userId = userId.toString()
             policeData.type = "theft_activity"
             policeData.questions = data
+            policeData.status = "in_progress"
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -143,6 +144,7 @@ class TheftActivity : AppCompatActivity() {
                 policeData.userId = userId.toString()
                 policeData.type = "theft_activity"
                 policeData.questions = data
+                policeData.status = "in_progress"
 
                 if(FirebaseHelper.isInternetConnected(this)){
                     getCurrentLocationAndSendData(policeData, true)

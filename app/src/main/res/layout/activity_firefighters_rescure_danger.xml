@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gdje se taćno nalaze osobe koje treba spasiti?" />
+        android:text="Gde se taćno nalaze osobe koje treba spasiti?" />
 
     <EditText
         android:id="@+id/currLocationEditText"

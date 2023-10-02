@@ -1,8 +1,8 @@
-package com.example.emergrency_app.ambulance.data
+package com.example.emergrency_app.firefighters.data
 
 import com.google.firebase.firestore.GeoPoint
 
-data class AmbulanceData(
+data class FirefighterData(
     var userId: String = "",
     var type: String = "",
     var status: String = "",

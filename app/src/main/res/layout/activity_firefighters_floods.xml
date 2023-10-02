@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gdje se događa poplava?" />
+        android:text="Gde se događa poplava?" />
 
     <EditText
         android:id="@+id/floodLocationEditText"

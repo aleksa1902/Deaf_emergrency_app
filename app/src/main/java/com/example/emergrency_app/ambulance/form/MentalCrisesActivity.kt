@@ -67,6 +67,7 @@ class MentalCrisesActivity : AppCompatActivity() {
             ambulanceData.userId = userId.toString()
             ambulanceData.type = "medical_crises"
             ambulanceData.questions = data
+            ambulanceData.status = "in_progress"
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -143,6 +144,7 @@ class MentalCrisesActivity : AppCompatActivity() {
                 ambulanceData.userId = userId.toString()
                 ambulanceData.type = "medical_crises"
                 ambulanceData.questions = data
+                ambulanceData.status = "in_progress"
 
                 if(FirebaseHelper.isInternetConnected(this)){
                     getCurrentLocationAndSendData(ambulanceData, true)

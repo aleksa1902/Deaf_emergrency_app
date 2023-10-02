@@ -69,6 +69,7 @@ class CarAccidentActivity : AppCompatActivity() {
             policeData.userId = userId.toString()
             policeData.type = "car_accident"
             policeData.questions = data
+            policeData.status = "in_progress"
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -145,6 +146,7 @@ class CarAccidentActivity : AppCompatActivity() {
                 policeData.userId = userId.toString()
                 policeData.type = "car_accident"
                 policeData.questions = data
+                policeData.status = "in_progress"
 
                 if(FirebaseHelper.isInternetConnected(this)){
                     getCurrentLocationAndSendData(policeData, true)
