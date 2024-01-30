@@ -10,11 +10,16 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import android.app.DatePickerDialog
+import android.util.Base64
 import android.view.View.OnFocusChangeListener
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
 import java.util.Calendar
 import java.util.regex.Pattern
 
@@ -124,69 +129,50 @@ class RegistrationActivity : AppCompatActivity() {
         return true
     }
 
-    private fun registerUser(firstName: String, lastName: String, dob: String, email: String, jmbg: String, password: String) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val user = FirebaseAuth.getInstance().currentUser
-                val uid = user?.uid ?: ""
-                val userData = hashMapOf(
-                    "firstName" to firstName,
-                    "lastName" to lastName,
-                    "dob" to dob,
-                    "jmbg" to jmbg
-                )
+    fun registerUser(firstName: String, lastName: String, dob: String, email: String, jmbg: String, password: String) {
+        val url = "https://deaf-emergency-api-7y7tv3tc.ew.gateway.dev/register"
+        val imageBase64 = selectedImageUri?.let { encodeImageToBase64(it) } ?: ""
+        val params = JSONObject()
+        params.put("name", firstName)
+        params.put("surname", lastName)
+        params.put("dateOfBirth", dob)
+        params.put("email", email)
+        params.put("password", password)
+        params.put("JMBG", jmbg)
+        params.put("image", imageBase64)  // Base64 encode your image and provide it here
 
-                // Upload selected image to Firebase Storage
-                if (selectedImageUri != null) {
-                    val storageRef = FirebaseStorage.getInstance().reference
-                    val imageRef = storageRef.child("profile_images/$uid")
-                    val uploadTask = imageRef.putFile(selectedImageUri!!)
-
-                    uploadTask.addOnSuccessListener { taskSnapshot ->
-                        // Get the download URL of the uploaded image
-                        imageRef.downloadUrl.addOnSuccessListener { uri ->
-                            val imageUrl = uri.toString()
-                            userData["profileImage"] = imageUrl
-
-                            // Save user data with the image URL
-                            val db = FirebaseFirestore.getInstance()
-                            db.collection("users").document(uid)
-                                .set(userData)
-                                .addOnSuccessListener {
-                                    // Successfully saved to Firestore
-                                    // You can finish this activity and return to LoginActivity
-                                    setResult(RESULT_OK)
-                                    finish()
-                                    Toast.makeText(this, "Uspešna registracija, sada se prijavite.", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(this, "Greška prilikom registracije. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
-                                }
-                        }
-                    }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Greska prilikom čuvanja slike. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
-                        }
-                } else {
-                    // Save user data without the image URL
-                    val db = FirebaseFirestore.getInstance()
-                    db.collection("users").document(uid)
-                        .set(userData)
-                        .addOnSuccessListener {
-                            // Successfully saved to Firestore
-                            // You can finish this activity and return to LoginActivity
-                            setResult(RESULT_OK)
-                            finish()
-                            Toast.makeText(this, "Uspešna registracija, sada se prijavite.", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Greška prilikom registracije. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
-                        }
-                }
-            } else {
-                Toast.makeText(this, "Greška prilikom registracije. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
+        val request = JsonObjectRequest(Request.Method.POST, url, params,
+            { // Registration successful
+                setResult(RESULT_OK)
+                finish()
+                Toast.makeText(this@RegistrationActivity, "Uspešna registracija, sada se prijavite.", Toast.LENGTH_SHORT).show()
             }
+        ) { // Registration failed
+            Toast.makeText(
+                this@RegistrationActivity,
+                "Greška prilikom registracije. Pokušajte ponovo.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
+        // Add the request to the RequestQueue
+        Volley.newRequestQueue(this).add(request)
+    }
+
+    private fun encodeImageToBase64(uri: Uri): String {
+        val inputStream: InputStream? = contentResolver.openInputStream(uri)
+        val bytes = readBytes(inputStream)
+        return Base64.encodeToString(bytes, Base64.DEFAULT)
+    }
+
+    @Throws(IOException::class)
+    private fun readBytes(inputStream: InputStream?): ByteArray {
+        val byteBuffer = ByteArrayOutputStream()
+        val bufferSize = 1024
+        val buffer = ByteArray(bufferSize)
+        var len: Int
+        while (inputStream?.read(buffer).also { len = it!! } != -1) {
+            byteBuffer.write(buffer, 0, len)
+        }
+        return byteBuffer.toByteArray()
     }
 }
