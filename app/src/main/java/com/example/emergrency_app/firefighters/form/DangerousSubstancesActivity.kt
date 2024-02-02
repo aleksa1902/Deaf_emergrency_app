@@ -18,9 +18,6 @@ import com.example.emergrency_app.R
 import com.example.emergrency_app.firefighters.data.FirefighterData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
 class DangerousSubstancesActivity : AppCompatActivity() {
@@ -44,8 +41,6 @@ class DangerousSubstancesActivity : AppCompatActivity() {
     private lateinit var safeEditText: EditText
     private lateinit var numPersonEditText: EditText
 
-    private lateinit var db: FirebaseFirestore
-
     private var spilingThing: Boolean = false
     private var check: Boolean = false
 
@@ -58,8 +53,6 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         layoutSpilling = findViewById(R.id.layoutSpilling)
         layoutRemoving = findViewById(R.id.layoutRemoving)
         buttonSendInformation = findViewById(R.id.buttonSendInformation)
-
-        db = FirebaseFirestore.getInstance()
 
         radioGroupDangerousSubstancesType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -97,9 +90,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         // Ovdje dodajte kod za obradu informacija kad korisnik pritisne "Posalji informacije"
         buttonSendInformation.setOnClickListener {
             if(check && spilingThing){
-                val auth = FirebaseAuth.getInstance()
-                val currentUser: FirebaseUser? = auth.currentUser
-                val userId: String? = currentUser?.uid
+                val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                val userId: String? = sharedPreferences.getString("userId", null).toString()
 
                 val data = mapOf(
                     "Koja stvar izliva i koliko je opasna?" to thingPersonEditText.text.toString(),
@@ -139,9 +131,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                     )
                 }
             }else{
-                val auth = FirebaseAuth.getInstance()
-                val currentUser: FirebaseUser? = auth.currentUser
-                val userId: String? = currentUser?.uid
+                val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                val userId: String? = sharedPreferences.getString("userId", null).toString()
 
                 val data = mapOf(
                     "Koja je vrsta opasnog materijala ili hemikalije?" to hazardousEditText.text.toString(),
@@ -194,7 +185,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                     override fun onLocationChanged(location: Location) {
                         if(net){
                             data.geoLocation = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "firefighters", this@DangerousSubstancesActivity)
+                            val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                            FirebaseHelper.saveDataFirefighters(data, sharedPreferences.getString("token", null).toString(), this@DangerousSubstancesActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@DangerousSubstancesActivity)
                         }
@@ -219,7 +211,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                     override fun onLocationChanged(location: Location) {
                         if(net){
                             data.geoLocation = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "firefighters", this@DangerousSubstancesActivity)
+                            val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                            FirebaseHelper.saveDataFirefighters(data, sharedPreferences.getString("token", null).toString(), this@DangerousSubstancesActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@DangerousSubstancesActivity)
                         }
@@ -243,9 +236,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if(spilingThing){
-                    val auth = FirebaseAuth.getInstance()
-                    val currentUser: FirebaseUser? = auth.currentUser
-                    val userId: String? = currentUser?.uid
+                    val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val userId: String? = sharedPreferences.getString("userId", null).toString()
 
                     val data = mapOf(
                         "Koja stvar izliva i koliko je opasna?" to thingPersonEditText.text.toString(),
@@ -267,9 +259,8 @@ class DangerousSubstancesActivity : AppCompatActivity() {
                         getCurrentLocationAndSendDataSpilling(firefighterData, false)
                     }
                 }else{
-                    val auth = FirebaseAuth.getInstance()
-                    val currentUser: FirebaseUser? = auth.currentUser
-                    val userId: String? = currentUser?.uid
+                    val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val userId: String? = sharedPreferences.getString("userId", null).toString()
 
                     val data = mapOf(
                         "Koja je vrsta opasnog materijala ili hemikalije?" to hazardousEditText.text.toString(),

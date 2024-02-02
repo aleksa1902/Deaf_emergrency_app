@@ -129,7 +129,7 @@ class RegistrationActivity : AppCompatActivity() {
         return true
     }
 
-    fun registerUser(firstName: String, lastName: String, dob: String, email: String, jmbg: String, password: String) {
+    private fun registerUser(firstName: String, lastName: String, dob: String, email: String, jmbg: String, password: String) {
         val url = "https://deaf-emergency-api-7y7tv3tc.ew.gateway.dev/register"
         val imageBase64 = selectedImageUri?.let { encodeImageToBase64(it) } ?: ""
         val params = JSONObject()

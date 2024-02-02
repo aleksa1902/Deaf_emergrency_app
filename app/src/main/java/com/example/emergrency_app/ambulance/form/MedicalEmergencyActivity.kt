@@ -19,9 +19,6 @@ import com.example.emergrency_app.R
 import com.example.emergrency_app.ambulance.data.AmbulanceData
 import com.example.emergrency_app.helper.FirebaseHelper
 import com.example.emergrency_app.helper.SmsHelper
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 
 class MedicalEmergencyActivity : AppCompatActivity() {
@@ -35,8 +32,6 @@ class MedicalEmergencyActivity : AppCompatActivity() {
     private lateinit var additionalInfoEditText: EditText
     private lateinit var sendInfoButton: Button
 
-    private lateinit var db: FirebaseFirestore
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ambulance_emergency)
@@ -48,12 +43,9 @@ class MedicalEmergencyActivity : AppCompatActivity() {
         additionalInfoEditText = findViewById(R.id.additionalInfoEditText)
         sendInfoButton = findViewById(R.id.sendInfoButton)
 
-        db = FirebaseFirestore.getInstance()
-
         sendInfoButton.setOnClickListener {
-            val auth = FirebaseAuth.getInstance()
-            val currentUser: FirebaseUser? = auth.currentUser
-            val userId: String? = currentUser?.uid
+            val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+            val userId: String? = sharedPreferences.getString("userId", null).toString()
 
             val data = mapOf(
                 "Je li osoba pri svesti?" to consciousEditText.text.toString(),
@@ -105,7 +97,8 @@ class MedicalEmergencyActivity : AppCompatActivity() {
                     override fun onLocationChanged(location: Location) {
                         if(net){
                             data.geoLocation = GeoPoint(location.latitude, location.longitude)
-                            FirebaseHelper.saveData(data, "ambulance", this@MedicalEmergencyActivity)
+                            val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                            FirebaseHelper.saveDataAmbulance(data, sharedPreferences.getString("token", null).toString(), this@MedicalEmergencyActivity)
                         }else{
                             SmsHelper.sendSMS(data, GeoPoint(location.latitude, location.longitude), this@MedicalEmergencyActivity)
                         }
@@ -128,9 +121,8 @@ class MedicalEmergencyActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val auth = FirebaseAuth.getInstance()
-                val currentUser: FirebaseUser? = auth.currentUser
-                val userId: String? = currentUser?.uid
+                val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                val userId: String? = sharedPreferences.getString("userId", null).toString()
 
                 val data = mapOf(
                     "Je li osoba pri svesti?" to consciousEditText.text.toString(),
